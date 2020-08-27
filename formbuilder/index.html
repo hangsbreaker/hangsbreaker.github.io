@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Form Builder</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="lib/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="style.css" rel="stylesheet" />
+  <script src="lib/js/jquery.1.12.4.min.js"></script>
+</head>
+
+<body>
+  <div id="headpanel">
+    <button id="preview" type="button" class="btn btn-primary" onclick="viewform()" title="Preview">
+      <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+    </button>
+    <input id="simpan" type="button" value="JSON" class="btn btn-info" onclick="tojson()" data-toggle="modal"
+      data-target="#myModal" />
+  </div>
+
+  <div class="container">
+    <input type="text" id="ftitle" placeholder="Judul Formulir" value="Judul Formulir" class="noborder" />
+    <div id="fdeskripsi" class="noborder" contenteditable>Deskripsi Formulir</div>
+    <div id="formcont"></div>
+
+    <div id="control">
+      <button type="button" class="btn btn-default btn-sm" onclick="addform()">
+        Add Form
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">JSON</h4>
+        </div>
+        <div class="modal-body">
+          <textarea class="form-control" id="modaljson"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="loadform()">Load Form</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="buildform.js"></script>
+  <script src="lib/js/bootstrap.min.js"></script>
+</body>
+
+</html>
