@@ -42,11 +42,13 @@ function buildform(myform = "", data = "") {
       if (tag[0] == "text") {
         input = document.createElement("input");
         input.setAttribute("name", fname);
+        input.setAttribute("id", fname.replace(/ /g, "_"));
         input.setAttribute("type", "text");
         input.setAttribute("placeholder", "Jawaban Anda");
       } else if (tag[0] == "textarea") {
         input = document.createElement("textarea");
         input.setAttribute("name", fname);
+        input.setAttribute("id", fname.replace(/ /g, "_"));
         input.setAttribute("placeholder", "Jawaban Anda");
       }
       if (form[k]["wajib"]) {
@@ -59,6 +61,7 @@ function buildform(myform = "", data = "") {
       if (tag[0] == "select") {
         input = document.createElement("select");
         input.setAttribute("name", fname);
+        input.setAttribute("id", fname.replace(/ /g, "_"));
         input.setAttribute("class", "form-control");
         let option = document.createElement("option");
         option.setAttribute("value", "");
