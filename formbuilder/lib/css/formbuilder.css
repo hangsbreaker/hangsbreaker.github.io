@@ -4,6 +4,10 @@
     right: 20px;
 }
 
+.form-select {
+    width: 100%;
+}
+
 .form-group {
     margin-bottom: 15px;
     margin: 15px 0px;

@@ -2,7 +2,6 @@ function buildform(myform = "", data = "") {
   const json = JSON.parse(data);
   let form = json["form"];
   var formats = {},
-    sldt = {},
     tagform = document.getElementById(myform);
   tagform.innerHTML +=
     '<div class="formhead"><h2 id="judulform">' +
@@ -38,7 +37,7 @@ function buildform(myform = "", data = "") {
     deskripsi.setAttribute("class", "deskripsi");
     wrap.appendChild(deskripsi);
 
-    if (form[k]["data"].length === 0 || tag[0] == "select") {
+    if (form[k]["data"].length === 0) {
       let input;
       if (tag[0] == "text") {
         input = document.createElement("input");
@@ -46,45 +45,29 @@ function buildform(myform = "", data = "") {
         input.setAttribute("id", fname.replace(/ /g, "_"));
         input.setAttribute("type", "text");
         input.setAttribute("placeholder", "Jawaban Anda");
-        input.setAttribute("class", "form-control");
       } else if (tag[0] == "textarea") {
         input = document.createElement("textarea");
         input.setAttribute("name", fname);
         input.setAttribute("id", fname.replace(/ /g, "_"));
         input.setAttribute("placeholder", "Jawaban Anda");
-        input.setAttribute("class", "form-control");
-      } else if (tag[0] == "select") {
-        input = document.createElement("input");
-        input.setAttribute("name", fname);
-        input.setAttribute("id", fname.replace(/ /g, "_"));
-        input.setAttribute("class", "form-select");
-        input.setAttribute("placeholder", "Pilih Jawaban");
-        sldt[tag[1]] = [];
-        for (var i in form[k]["data"]) {
-          sldt[tag[1]][i] = {
-            id: form[k]["data"][i],
-            text: form[k]["data"][i]
-          };
-        }
-        if (!form[k]["wajib"]) {
-          sldt[tag[1]].push({
-            id: "Tidak ada",
-            text: "Tidak ada"
-          });
-        }
-        $(function() {
-          $("#" + fname.replace(/ /g, "_")).select2({
-            data: sldt[tag[1]]
-          });
-        });
       }
       if (form[k]["wajib"]) {
         input.setAttribute("required", "required");
       }
+      input.setAttribute("class", "form-control");
       wrap.appendChild(input);
     } else {
       let input;
-      if (tag[0] == "opsi") {
+      if (tag[0] == "select") {
+        input = document.createElement("select");
+        input.setAttribute("name", fname);
+        input.setAttribute("id", fname.replace(/ /g, "_"));
+        input.setAttribute("class", "form-select");
+        let option = document.createElement("option");
+        option.setAttribute("value", "");
+        option.innerHTML = "Pilih Jawaban";
+        input.appendChild(option);
+      } else if (tag[0] == "opsi") {
         let btlopt = document.createElement("span");
         btlopt.setAttribute("id", "btlopsi-" + tag[1]);
         btlopt.setAttribute("class", "btn btlopt");
@@ -129,6 +112,12 @@ function buildform(myform = "", data = "") {
               ck[0].setAttribute("required", "required");
             }
           });
+        } else if (tag[0] == "select") {
+          let option = document.createElement("option");
+          option.setAttribute("value", form[k]["data"][i]);
+          option.innerHTML = form[k]["data"][i];
+          input.appendChild(option);
+          wrap.appendChild(input);
         } else if (tag[0] == "tanggal") {
           input = document.createElement("div");
           input.setAttribute("class", "input-group tanggal");
@@ -174,15 +163,23 @@ function buildform(myform = "", data = "") {
           input.setAttribute("required", "required");
         }
 
-        let labelp = document.createElement("label");
-        labelp.setAttribute("class", "pilihan");
-        labelp.appendChild(input);
-        if (tag[0] === "opsi" || tag[0] === "check") {
-          let span = document.createElement("span");
-          span.innerHTML = form[k]["data"][i];
-          labelp.appendChild(span);
+        if (tag[0] != "select") {
+          let labelp = document.createElement("label");
+          labelp.setAttribute("class", "pilihan");
+          labelp.appendChild(input);
+          if (tag[0] === "opsi" || tag[0] === "check") {
+            let span = document.createElement("span");
+            span.innerHTML = form[k]["data"][i];
+            labelp.appendChild(span);
+          }
+          wrap.appendChild(labelp);
         }
-        wrap.appendChild(labelp);
+      }
+      if (tag[0] == "select") {
+        $(function() {
+          // if select use data:{}
+          $(".form-select").select2();
+        });
       }
     }
     content.appendChild(wrap);
