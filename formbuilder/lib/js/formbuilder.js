@@ -68,8 +68,8 @@ function buildform(myform = "", data = "") {
         }
         if (!form[k]["wajib"]) {
           sldt[tag[1]].push({
-            id: "Tidak ada",
-            text: "Tidak ada"
+            id: "Kosong",
+            text: "Kosong"
           });
         }
         $(function() {
