@@ -198,7 +198,7 @@ function dasar(kata) {
   if (kata.substr(-1) == "i") {
     if (kata.length > 4) {
       if (kata.substr(kata.length - 3, 2) != "rt") {
-        kata = kata.substr(-1);
+        kata = kata.substr(0, kata.length - 1);
       }
     }
   } else {
@@ -210,16 +210,16 @@ function dasar(kata) {
               kata = kata.substr(-3) + "an";
             } else {
               if (kata.substr(-4, 1) == "l") {
-                kata = kata.substr(-3);
+                kata = kata.substr(0, kata.length - 3);
               } else {
-                kata = kata.substr(-3);
+                kata = kata.substr(0, kata.length - 3);
               }
             }
           } else {
-            kata = kata.substr(-3);
+            kata = kata.substr(0, kata.length - 3);
           }
         } else {
-          kata = kata.substr(-2);
+          kata = kata.substr(0, kata.length - 2);
         }
       }
     }
