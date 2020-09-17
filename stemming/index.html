@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Stemming Bahasa Indonesia Javascript</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="stem.js"></script>
+</head>
+
+<body>
+    <textarea type="text" id="kalimat" onkeyup="process(this.value)" style="width: 312px;height: 107px;"></textarea>
+    <div id="result"></div>
+
+    <script>
+        var kalimat = "Kalimat percobaan ini telah berubah menjadi kata dasar";
+        function process(str) {
+            document.getElementById("result").innerHTML = stem(str);
+        }
+        document.getElementById("kalimat").value = kalimat;
+        process(kalimat);
+    </script>
+</body>
+
+</html>
