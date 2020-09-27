@@ -32,8 +32,7 @@ function dasar(kata) {
         kata.substr(3, 1) == "o"
       ) {
         if (
-          kata.substr(6, 1) == "h" ||
-          (kata.substr(4, 1) == "s" && kata.substr(5, 1) != "t") ||
+          //(kata.substr(4, 1) == "s" && kata.substr(5, 1) != "t") ||
           kata.substr(4, 1) == "l" ||
           kata.substr(4, 1) == "k"
         ) {
@@ -42,7 +41,7 @@ function dasar(kata) {
           kata = "p" + kata.substr(3, kata.length);
         }
       } else {
-        kata = kata.substr(0, 3);
+        kata = kata.substr(3, kata.length);
       }
     } else {
       if (kata.substr(0, 3) == "men") {
@@ -56,9 +55,13 @@ function dasar(kata) {
               kata.substr(4, 1) == "a" ||
               kata.substr(4, 1) == "e" ||
               kata.substr(4, 1) == "o" ||
-              kata.substr(4, 3) == "ura"
+              kata.substr(4, 1) == "u"
             ) {
-              kata = "k" + kata.substr(4, kata.length);
+              if (suffix(kata.substr(4, kata.length)).length > 4) {
+                kata = "k" + kata.substr(4, kata.length);
+              } else {
+                kata = kata.substr(4, kata.length);
+              }
             } else {
               kata = kata.substr(4, kata.length);
             }
@@ -164,7 +167,7 @@ function dasar(kata) {
       }
     }
   } else {
-    if (kata.substr(0, 3) == "per" && kata.length > 5) {
+    if (kata.substr(0, 3) == "per" && kata.substr(3, kata.length).length > 5) {
       kata = kata.substr(3, kata.length);
     } else {
       if (kata.substr(0, 3) == "pel" && kata.length > 5) {
@@ -175,9 +178,9 @@ function dasar(kata) {
             kata = kata.substr(2, kata.length);
           }
         } else {
-          if (kata.substr(0, 2) == "pe" && kata.length > 5) {
-            if (kata.substr(2, 1) == "r" && kata.length > 5) {
-              kata = kata.substr(0, 3);
+          if (kata.substr(0, 2) == "pe" && kata.substr(0, 2).length > 5) {
+            if (kata.substr(2, 1) == "r" && kata.substr(0, 3).length > 5) {
+              kata = kata.substr(3, kata.length);
             } else {
               if (kata.substr(2, 1) == "l" && kata.length > 5) {
                 if (kata.substr(4, 1) == "y") {
@@ -186,7 +189,9 @@ function dasar(kata) {
                   kata = kata.substr(3, kata.length);
                 }
               } else {
-                kata = kata.substr(2, kata.length);
+                if (suffix(kata.substr(2, kata.length)).length > 4) {
+                  kata = kata.substr(2, kata.length);
+                }
               }
             }
           }
@@ -194,9 +199,51 @@ function dasar(kata) {
       }
     }
   }
+  kata = suffix(kata);
+  ////langkah 5 hapus kalau cuma 1 karakter
+  if (kata.length == 1) {
+    kata = "";
+  }
+  return kata;
+}
+
+function suffix(kata) {
   ////langkah 5 hapus suffiks
+
+  var prefix = {
+    kah: "",
+    lah: "",
+    pun: "",
+    me: "",
+    mem: "",
+    men: "",
+    meng: "",
+    meny: "",
+    peng: "",
+    pem: "",
+    pen: "",
+    peny: "",
+    di: "",
+    ter: "",
+    ke: "",
+    kem: "",
+    ken: "",
+    be: "",
+    bek: "",
+    bel: "",
+    ber: "",
+    per: "",
+    pel: "",
+    se: ""
+  };
+  var str = kata;
+  var RE = new RegExp(Object.keys(prefix).join("|"), "gi");
+  str = str.replace(RE, function(matched) {
+    return prefix[matched];
+  });
+
   if (kata.substr(-1) == "i") {
-    if (kata.length > 4) {
+    if (str.length > 5) {
       if (kata.substr(kata.length - 3, 2) != "rt") {
         kata = kata.substr(0, kata.length - 1);
       }
@@ -224,22 +271,20 @@ function dasar(kata) {
       }
     }
   }
-
-  ////langkah 5 hapus kalau cuma 1 karakter
-  if (kata.length == 1) {
-    kata = "";
-  }
   return kata;
 }
 
-function stem(kalimat) {
-  var str = "";
-  var ark = kalimat
-    .replace(/[^0-9a-zA-Z]/g, " ")
-    .toLowerCase()
-    .split(" ");
-  for (kata in ark) {
-    str = str + " " + dasar(ark[kata]);
+function stem(kalimat = "") {
+  if (kalimat != "") {
+    var str = "";
+    var ark = kalimat
+      .replace(/[^0-9a-zA-Z]/g, " ")
+      .toLowerCase()
+      .split(" ");
+    for (kata in ark) {
+      str = str + " " + dasar(ark[kata]);
+    }
+    return str.trim();
   }
-  return str.trim();
+  return;
 }
