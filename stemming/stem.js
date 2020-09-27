@@ -57,7 +57,7 @@ function dasar(kata) {
               kata.substr(4, 1) == "o" ||
               kata.substr(4, 1) == "u"
             ) {
-              if (suffix(kata.substr(4, kata.length)).length > 4) {
+              if (suffix(kata.substr(4, kata.length)).length > 5) {
                 kata = "k" + kata.substr(4, kata.length);
               } else {
                 kata = kata.substr(4, kata.length);
