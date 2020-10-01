@@ -34,7 +34,8 @@ function dasar(kata) {
         if (
           //(kata.substr(4, 1) == "s" && kata.substr(5, 1) != "t") ||
           kata.substr(4, 1) == "l" ||
-          kata.substr(4, 1) == "k"
+          kata.substr(4, 1) == "k" ||
+          kata.substr(-1) == "m"
         ) {
           kata = "m" + kata.substr(3, kata.length);
         } else {
@@ -45,7 +46,7 @@ function dasar(kata) {
       }
     } else {
       if (kata.substr(0, 3) == "men") {
-        if (kata.substr(3, 1) == "e") {
+        if (kata.substr(3, 1) == "e" || kata.substr(3, 1) == "a") {
           kata = "t" + kata.substr(3, kata.length);
         } else if (kata.substr(3, 1) == "i") {
           kata = "n" + kata.substr(3, kata.length);
@@ -57,7 +58,11 @@ function dasar(kata) {
               kata.substr(4, 1) == "o" ||
               kata.substr(4, 1) == "u"
             ) {
-              if (suffix(kata.substr(4, kata.length)).length > 5) {
+              if (
+                (suffix(kata.substr(4, kata.length)).length > 5 &&
+                  kata.substr(-1) != "t") ||
+                kata.substr(-1) == "p"
+              ) {
                 kata = "k" + kata.substr(4, kata.length);
               } else {
                 kata = kata.substr(4, kata.length);
@@ -199,6 +204,7 @@ function dasar(kata) {
       }
     }
   }
+
   kata = suffix(kata);
   ////langkah 5 hapus kalau cuma 1 karakter
   if (kata.length == 1) {
@@ -263,7 +269,9 @@ function suffix(kata) {
               }
             }
           } else {
-            kata = kata.substr(0, kata.length - 3);
+            if (kata.length > 5) {
+              kata = kata.substr(0, kata.length - 3);
+            }
           }
         } else {
           kata = kata.substr(0, kata.length - 2);
