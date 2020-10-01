@@ -33,9 +33,11 @@ function dasar(kata) {
       ) {
         if (
           //(kata.substr(4, 1) == "s" && kata.substr(5, 1) != "t") ||
-          kata.substr(4, 1) == "l" ||
-          kata.substr(4, 1) == "k" ||
-          kata.substr(-1) == "m"
+          ((kata.substr(4, 1) == "l" ||
+            kata.substr(-1) == "m" ||
+            kata.substr(-1) == "k") &&
+            kata.substr(-1) != "n") ||
+          (kata.substr(-1) == "n" && kata.length <= 7)
         ) {
           kata = "m" + kata.substr(3, kata.length);
         } else {
