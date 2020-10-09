@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <title>LocalStorage</title>
+</head>
+
+<body>
+    <div>
+        <form id="inputform" onsubmit="proccess(); return false;">
+            <input type="text" id="nama" value="" placeholder="Nama" required />
+            <select id="kelamin" required>
+                <option value=""> Kelamin </option>
+                <option value="L">Laki - laki</option>
+                <option value="P">Perempuan</option>
+            </select>
+            <button type="submit" id="process">Add</button>
+            <button type="button" id="cancel" style="display: none;" onclick="cancl();">Cancel</button>
+        </form>
+    </div>
+    <div id="table"></div>
+
+    <script src="LocalStorage.js"></script>
+    <script>
+        // create table mhs
+        var idusr = "";
+        var tableUser = 'user';
+        var dataUser = getData(tableUser);
+        if (dataUser == null) {
+            createTable(tableUser);
+            insertData(tableUser, { "nama": "Satu", "kelamin": "L" });
+            insertData(tableUser, { "nama": "Dua", "kelamin": "P" });
+            dataUser = insertData(tableUser, { "nama": "Tiga", "kelamin": "P" });
+        }
+
+
+        function loadData() {
+            dataUser = getData(tableUser);
+            var tbl = '<table width="100%" border="1" cellpadding="7" cellspacing="0"><tr><td>Nama</td><td>Kelamin</td><td width="75px">Proses</td></tr>';
+            for (u in dataUser) {
+                tbl += '<tr><td>' + dataUser[u].nama + '</td><td>' + dataUser[u].kelamin + '</td><td><button type="button" onclick="edit(' + dataUser[u].id + ')">Edit</button><button type="button" onclick="del(' + dataUser[u].id + ')">Del</button></td></tr>';
+            }
+            tbl += '</table>';
+
+            document.getElementById('table').innerHTML = tbl;
+        }
+        loadData();
+
+        function proccess() {
+            var nama = document.getElementById('nama').value;
+            var kelamin = document.getElementById('kelamin').value;
+            var jns = document.getElementById('process').innerHTML;
+            if (jns == 'Add') {
+                insertData(tableUser, { "nama": nama, "kelamin": kelamin });
+            } else if (jns == 'Update') {
+                updateData(tableUser, idusr, { "nama": nama, "kelamin": kelamin });
+                document.getElementById('cancel').style.display = "none";
+                document.getElementById('process').innerHTML = "Add";
+                idusr = "";
+            }
+            loadData();
+
+            document.getElementById('nama').value = "";
+            document.getElementById('kelamin').value = "";
+        }
+
+        function edit(id) {
+            idusr = id;
+            var dt = getById(tableUser, id);
+            document.getElementById('nama').value = dt.nama;
+            document.getElementById('kelamin').value = dt.kelamin;
+            document.getElementById('process').innerHTML = "Update";
+            document.getElementById('cancel').style.display = "inline-block";
+        }
+        function cancl() {
+            document.getElementById('cancel').style.display = "none";
+            document.getElementById('process').innerHTML = "Add";
+            idusr = "";
+            document.getElementById('nama').value = "";
+            document.getElementById('kelamin').value = "";
+        }
+
+        function del(id) {
+            deleteData(tableUser, id);
+            loadData();
+        }
+    </script>
+</body>
+
+</html>
