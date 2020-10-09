@@ -78,7 +78,7 @@ function addform(pertanyaan = "", deskripsi = "", checked = "") {
       no +
       '" style="width:160px;" onchange="setjns(\'' +
       no +
-      '\')"><option value="input">Jawaban Singkat</option><option value="textarea">Paragraf</option><option value="radio">Pilihan Ganda</option><option value="checkbox">Kotak Centang</option><option value="select">Drop-down</option><option value="tanggal">Tanggal</option><option value="waktu">Waktu</option><option disabled>────────────</option><option value="judul">Tambahkan Judul</option></select><div class="wajibisi" id="wajibisi-' +
+      '\')"><option value="input">Jawaban Singkat</option><option value="textarea">Paragraf</option><option value="radio">Pilihan Ganda</option><option value="checkbox">Kotak Centang</option><option value="select">Drop-down</option><option value="tanggal">Tanggal</option><option value="waktu">Waktu</option><option value="password">Password</option><option disabled>────────────</option><option value="judul">Tambahkan Judul</option></select><div class="wajibisi" id="wajibisi-' +
       no +
       '">Wajib diisi <label class="switch"><input type="checkbox" class="wajib" id="wajib-' +
       no +
@@ -131,6 +131,12 @@ function makeInput(no, inp) {
     case "input":
       tag =
         '<div class="jawabansingkat" id="text-' +
+        no +
+        '">Teks jawaban singkat</div>';
+      break;
+    case "password":
+      tag =
+        '<div class="jawabansingkat" id="password-' +
         no +
         '">Teks jawaban singkat</div>';
       break;
@@ -369,6 +375,8 @@ function editing(data = "") {
       jenis = 5;
     } else if (tag[0] == "waktu") {
       jenis = 6;
+    } else if (tag[0] == "password") {
+      jenis = 7;
     }
     addform(form[k]["pertanyaan"], form[k]["deskripsi"], checkbx);
 
