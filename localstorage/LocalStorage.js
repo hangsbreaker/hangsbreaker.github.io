@@ -97,3 +97,33 @@ function findData(tableObj, keyword) {
 
   return filtered;
 }
+
+// GET WHERE
+function getWhere(tableObj, idx, value) {
+  var obj = tableObj;
+  var dt = obj.filter(function(item, index) {
+    if (item.hasOwnProperty(idx)) {
+      return (
+        item[idx].toString().toLowerCase() == value.toString().toLowerCase()
+      );
+    } else {
+      return "";
+    }
+  });
+  return dt;
+}
+// GET LIKE
+function getLike(tableObj, idx, value) {
+  var obj = tableObj;
+  var dt = obj.filter(function(item, index) {
+    if (item.hasOwnProperty(idx)) {
+      return item[idx]
+        .toString()
+        .toLowerCase()
+        .includes(value.toString().toLowerCase());
+    } else {
+      return "";
+    }
+  });
+  return dt;
+}
