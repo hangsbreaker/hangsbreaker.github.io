@@ -16,6 +16,11 @@ function getById(table, rid) {
   });
   return dt;
 }
+// GET LAST ID
+function getLastId(table) {
+  id = getData("inc_" + table);
+  return id;
+}
 
 // GET DATA
 function getData(table) {
