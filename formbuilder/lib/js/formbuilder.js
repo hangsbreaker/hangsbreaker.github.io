@@ -37,6 +37,7 @@ function buildform(myform = "", data = "") {
     let deskripsi = document.createElement("p");
     deskripsi.innerHTML = form[k]["deskripsi"];
     deskripsi.setAttribute("class", "deskripsi");
+    deskripsi.setAttribute("id", "des" + tag[1]);
     wrap.appendChild(deskripsi);
 
     if (form[k]["data"].length === 0 || tag[0] == "select") {
