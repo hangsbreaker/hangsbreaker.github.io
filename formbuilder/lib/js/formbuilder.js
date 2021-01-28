@@ -14,7 +14,7 @@ function buildform(myform = "", data = "") {
   let content = document.createElement("div");
   content.setAttribute("class", "formcontent");
   for (var k in form) {
-    //console.log("> " + k + " = " + form[k]["pertanyaan"]);
+    let fname = form[k]["pertanyaan"].replace(/ /g, "_").replace(/\//g, "-");
     let tag = k.split("-");
 
     let wrap = document.createElement("div");
@@ -25,19 +25,19 @@ function buildform(myform = "", data = "") {
     } else {
       label = document.createElement("label");
       wrap.setAttribute("class", "form-group");
-      wrap.setAttribute("id", "fgwrap" + tag[1]);
+      wrap.setAttribute("id", "fg-" + fname);
     }
     label.setAttribute("class", "pertanyaan");
+    label.setAttribute("id", "q-" + fname);
     label.innerHTML =
       form[k]["pertanyaan"] +
       (form[k]["wajib"] ? ' <span class="wajib">*</span>' : "");
     wrap.appendChild(label);
 
-    let fname = form[k]["pertanyaan"].replace(/ /g, "_");
     let deskripsi = document.createElement("p");
     deskripsi.innerHTML = form[k]["deskripsi"];
     deskripsi.setAttribute("class", "deskripsi");
-    deskripsi.setAttribute("id", "des" + tag[1]);
+    deskripsi.setAttribute("id", "des-" + fname);
     wrap.appendChild(deskripsi);
 
     if (form[k]["data"].length === 0 || tag[0] == "select") {
@@ -45,33 +45,33 @@ function buildform(myform = "", data = "") {
       if (tag[0] == "text") {
         input = document.createElement("input");
         input.setAttribute("name", fname);
-        input.setAttribute("id", fname.replace(/ /g, "_"));
+        input.setAttribute("id", fname);
         input.setAttribute("type", "text");
         input.setAttribute("placeholder", "Jawaban Anda");
         input.setAttribute("class", "form-control");
       } else if (tag[0] == "password") {
         input = document.createElement("input");
         input.setAttribute("name", fname);
-        input.setAttribute("id", fname.replace(/ /g, "_"));
+        input.setAttribute("id", fname);
         input.setAttribute("type", "password");
         input.setAttribute("placeholder", "Jawaban Anda");
         input.setAttribute("class", "form-control");
       } else if (tag[0] == "file") {
         input = document.createElement("input");
         input.setAttribute("name", fname);
-        input.setAttribute("id", fname.replace(/ /g, "_"));
+        input.setAttribute("id", fname);
         input.setAttribute("type", "file");
         input.setAttribute("class", "form-control");
       } else if (tag[0] == "textarea") {
         input = document.createElement("textarea");
         input.setAttribute("name", fname);
-        input.setAttribute("id", fname.replace(/ /g, "_"));
+        input.setAttribute("id", fname);
         input.setAttribute("placeholder", "Jawaban Anda");
         input.setAttribute("class", "form-control");
       } else if (tag[0] == "select") {
         input = document.createElement("input");
         input.setAttribute("name", fname);
-        input.setAttribute("id", fname.replace(/ /g, "_"));
+        input.setAttribute("id", fname);
         input.setAttribute("class", "form-select");
         input.setAttribute("placeholder", "Pilih Jawaban");
         sldt[tag[1]] = [];
@@ -88,7 +88,7 @@ function buildform(myform = "", data = "") {
           });
         }
         $(function() {
-          $("#" + fname.replace(/ /g, "_")).select2({
+          $("#" + fname).select2({
             data: sldt[tag[1]]
           });
         });
