@@ -78,7 +78,7 @@ function addform(pertanyaan = "", deskripsi = "", checked = "") {
       no +
       '" style="width:160px;" onchange="setjns(\'' +
       no +
-      '\')"><option value="input">Jawaban Singkat</option><option value="textarea">Paragraf</option><option value="radio">Pilihan Ganda</option><option value="checkbox">Kotak Centang</option><option value="select">Drop-down</option><option value="tanggal">Tanggal</option><option value="waktu">Waktu</option><option value="password">Password</option><option disabled>────────────</option><option value="judul">Tambahkan Judul</option></select><div class="wajibisi" id="wajibisi-' +
+      '\')"><option value="input">Jawaban Singkat</option><option value="textarea">Paragraf</option><option value="radio">Pilihan Ganda</option><option value="checkbox">Kotak Centang</option><option value="select">Drop-down</option><option value="tanggal">Tanggal</option><option value="waktu">Waktu</option><option value="file">File</option><option value="password">Password</option><option disabled>────────────</option><option value="judul">Tambahkan Judul</option></select><div class="wajibisi" id="wajibisi-' +
       no +
       '">Wajib diisi <label class="switch"><input type="checkbox" class="wajib" id="wajib-' +
       no +
@@ -134,11 +134,14 @@ function makeInput(no, inp) {
         no +
         '">Teks jawaban singkat</div>';
       break;
+    case "file":
+      tag = '<div id="file-' + no + '"><input type="file" disabled/></div>';
+      break;
     case "password":
       tag =
         '<div class="jawabansingkat" id="password-' +
         no +
-        '">Teks jawaban singkat</div>';
+        '">Masukan Password</div>';
       break;
     case "textarea":
       tag =
@@ -375,8 +378,12 @@ function editing(data = "") {
       jenis = 5;
     } else if (tag[0] == "waktu") {
       jenis = 6;
-    } else if (tag[0] == "password") {
+    } else if (tag[0] == "file") {
       jenis = 7;
+    } else if (tag[0] == "password") {
+      jenis = 8;
+    } else if (tag[0] == "judul") {
+      jenis = 10;
     }
     addform(form[k]["pertanyaan"], form[k]["deskripsi"], checkbx);
 
@@ -400,7 +407,6 @@ function editing(data = "") {
       }
     } else if (tag[0] == "select") {
       select[tag[1]] = 0;
-      console.log("select-" + tag[1]);
       document.getElementById("select-" + tag[1]).innerHTML = "";
       for (var i in form[k]["data"]) {
         addselect(tag[1]);
