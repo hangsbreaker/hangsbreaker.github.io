@@ -42,6 +42,7 @@ function handleDrop(e) {
   if (dragSrcEl != this) {
     dragSrcEl.innerHTML = this.innerHTML;
     this.innerHTML = e.dataTransfer.getData("text/html");
+    this.parentNode.insertBefore(dragSrcEl, event.target.nextSibling);
   }
 
   return false;
