@@ -13,9 +13,12 @@ function buildform(myform = "", data = "") {
 
   let content = document.createElement("div");
   content.setAttribute("class", "formcontent");
+  var tagn = 0;
   for (var k in form) {
-    let fname = form[k]["pertanyaan"].replace(/ /g, "_").replace(/\//g, "-");
-    let tag = k.split("-");
+    let tag = [];
+    tag[1] = tagn;
+    tag[0] = form[tagn]["type"];
+    let fname = form[tag[1]]["pertanyaan"].replace(/[^A-Za-z0-9!?]/g, ""); //.replace(/ /g, "_").replace(/\//g, "-");
 
     let wrap = document.createElement("div");
     let label;
@@ -30,17 +33,17 @@ function buildform(myform = "", data = "") {
     label.setAttribute("class", "pertanyaan");
     label.setAttribute("id", "q-" + fname);
     label.innerHTML =
-      form[k]["pertanyaan"] +
-      (form[k]["wajib"] ? ' <span class="wajib">*</span>' : "");
+      form[tag[1]]["pertanyaan"] +
+      (form[tag[1]]["wajib"] ? ' <span class="wajib">*</span>' : "");
     wrap.appendChild(label);
 
     let deskripsi = document.createElement("p");
-    deskripsi.innerHTML = form[k]["deskripsi"];
+    deskripsi.innerHTML = form[tag[1]]["deskripsi"];
     deskripsi.setAttribute("class", "deskripsi");
     deskripsi.setAttribute("id", "des-" + fname);
     wrap.appendChild(deskripsi);
 
-    if (form[k]["data"].length === 0 || tag[0] == "select") {
+    if (form[tag[1]]["data"].length === 0 || tag[0] == "select") {
       let input;
       if (tag[0] == "text") {
         input = document.createElement("input");
@@ -75,13 +78,13 @@ function buildform(myform = "", data = "") {
         input.setAttribute("class", "form-select");
         input.setAttribute("placeholder", "Pilih Jawaban");
         sldt[tag[1]] = [];
-        for (var i in form[k]["data"]) {
+        for (var i in form[tag[1]]["data"]) {
           sldt[tag[1]][i] = {
-            id: form[k]["data"][i],
-            text: form[k]["data"][i]
+            id: form[tag[1]]["data"][i],
+            text: form[tag[1]]["data"][i]
           };
         }
-        if (!form[k]["wajib"]) {
+        if (!form[tag[1]]["wajib"]) {
           sldt[tag[1]].push({
             id: "Kosong",
             text: "Kosong"
@@ -93,7 +96,7 @@ function buildform(myform = "", data = "") {
           });
         });
       }
-      if (form[k]["wajib"]) {
+      if (form[tag[1]]["wajib"]) {
         input.setAttribute("required", "required");
       }
       wrap.appendChild(input);
@@ -114,15 +117,15 @@ function buildform(myform = "", data = "") {
         });
         wrap.appendChild(btlopt);
       }
-      for (var i in form[k]["data"]) {
+      for (var i in form[tag[1]]["data"]) {
         if (tag[0] == "opsi") {
           input = document.createElement("input");
           input.setAttribute("name", fname);
           input.setAttribute("id", fname + i);
           input.setAttribute("type", "radio");
-          input.setAttribute("value", form[k]["data"][i]);
+          input.setAttribute("value", form[tag[1]]["data"][i]);
           input.addEventListener("click", function() {
-            if (!form["opsi-" + tag[1]]["wajib"]) {
+            if (!form[tag[1]]["wajib"]) {
               document.getElementById("btlopsi-" + tag[1]).style.display =
                 "block";
             }
@@ -132,7 +135,7 @@ function buildform(myform = "", data = "") {
           input.setAttribute("name", fname + "[]");
           input.setAttribute("id", fname + i);
           input.setAttribute("type", "checkbox");
-          input.setAttribute("value", form[k]["data"][i]);
+          input.setAttribute("value", form[tag[1]]["data"][i]);
           input.addEventListener("click", function() {
             let ck = document.querySelectorAll('input[name="' + fname + '[]"]');
             let jmlck = 0;
@@ -156,11 +159,11 @@ function buildform(myform = "", data = "") {
             '" id="' +
             fname +
             '" value="" placeholder="' +
-            form[k]["data"][i] +
+            form[tag[1]]["data"][i] +
             '" ' +
-            (form[k]["wajib"] ? 'required="required"' : "") +
+            (form[tag[1]]["wajib"] ? 'required="required"' : "") +
             '/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>';
-          formats[tag[1]] = form[k]["data"][i];
+          formats[tag[1]] = form[tag[1]]["data"][i];
           $(function() {
             $("#tanggal" + tag[1]).datetimepicker({
               viewMode: "years",
@@ -177,11 +180,11 @@ function buildform(myform = "", data = "") {
             '" id="' +
             fname +
             '" value="" placeholder="' +
-            form[k]["data"][i] +
+            form[tag[1]]["data"][i] +
             '" ' +
-            (form[k]["wajib"] ? 'required="required"' : "") +
+            (form[tag[1]]["wajib"] ? 'required="required"' : "") +
             '/><span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>';
-          formats[tag[1]] = form[k]["data"][i];
+          formats[tag[1]] = form[tag[1]]["data"][i];
           $(function() {
             $("#waktu" + tag[1]).datetimepicker({
               format: formats[tag[1]]
@@ -189,9 +192,9 @@ function buildform(myform = "", data = "") {
           });
         } else if (tag[0] == "judul") {
           input = document.createElement("span");
-          input.innerHTML = form[k]["data"][i];
+          input.innerHTML = form[tag[1]]["data"][i];
         }
-        if (form[k]["wajib"]) {
+        if (form[tag[1]]["wajib"]) {
           input.setAttribute("required", "required");
         }
 
@@ -200,13 +203,14 @@ function buildform(myform = "", data = "") {
         labelp.appendChild(input);
         if (tag[0] === "opsi" || tag[0] === "check") {
           let span = document.createElement("span");
-          span.innerHTML = form[k]["data"][i];
+          span.innerHTML = form[tag[1]]["data"][i];
           labelp.appendChild(span);
         }
         wrap.appendChild(labelp);
       }
     }
     content.appendChild(wrap);
+    tagn++;
   }
 
   tagform.appendChild(content);

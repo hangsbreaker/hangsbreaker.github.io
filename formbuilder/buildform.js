@@ -309,7 +309,7 @@ function tojson() {
   json = {};
   json["judul"] = document.getElementById("ftitle").value;
   json["deskripsi"] = document.getElementById("fdeskripsi").innerHTML;
-  json["form"] = {};
+  json["form"] = [];
   let nj = 0;
   let p = document.querySelectorAll(".pertanyaan");
   p.forEach(function(i) {
@@ -319,14 +319,15 @@ function tojson() {
     let wajib = document.getElementById("wajib-" + n[1]).checked;
     let iditem = document.getElementById("item-" + n[1]).firstChild.id;
     let item = iditem.split("-");
-    json["form"][item[0] + "-" + nj] = {};
-    json["form"][item[0] + "-" + nj]["pertanyaan"] = pertanyaan;
-    json["form"][item[0] + "-" + nj]["deskripsi"] = deskripsi;
-    json["form"][item[0] + "-" + nj]["wajib"] = wajib;
-    json["form"][item[0] + "-" + nj]["data"] = [];
+    json["form"][nj] = {};
+    json["form"][nj]["type"] = item[0];
+    json["form"][nj]["pertanyaan"] = pertanyaan;
+    json["form"][nj]["deskripsi"] = deskripsi;
+    json["form"][nj]["wajib"] = wajib;
+    json["form"][nj]["data"] = [];
     let c = document.querySelectorAll("#" + iditem + " input[type=text]");
     c.forEach(function(j) {
-      json["form"][item[0] + "-" + nj]["data"].push(j.value);
+      json["form"][nj]["data"].push(j.value);
     });
     nj++;
   });
@@ -362,65 +363,65 @@ function editing(data = "") {
   var formats = {};
 
   for (var k in form) {
-    let tag = k.split("-");
+    let tag = form[k]["type"];
     let checkbx = form[k]["wajib"] ? "checked" : "";
-    if (tag[0] == "text") {
+    if (tag == "text") {
       jenis = 0;
-    } else if (tag[0] == "textarea") {
+    } else if (tag == "textarea") {
       jenis = 1;
-    } else if (tag[0] == "opsi") {
+    } else if (tag == "opsi") {
       jenis = 2;
-    } else if (tag[0] == "check") {
+    } else if (tag == "check") {
       jenis = 3;
-    } else if (tag[0] == "select") {
+    } else if (tag == "select") {
       jenis = 4;
-    } else if (tag[0] == "tanggal") {
+    } else if (tag == "tanggal") {
       jenis = 5;
-    } else if (tag[0] == "waktu") {
+    } else if (tag == "waktu") {
       jenis = 6;
-    } else if (tag[0] == "file") {
+    } else if (tag == "file") {
       jenis = 7;
-    } else if (tag[0] == "password") {
+    } else if (tag == "password") {
       jenis = 8;
-    } else if (tag[0] == "judul") {
+    } else if (tag == "judul") {
       jenis = 10;
     }
     addform(form[k]["pertanyaan"], form[k]["deskripsi"], checkbx);
 
-    if (tag[0] == "opsi") {
-      opsi[tag[1]] = 0;
-      document.getElementById("opsi-" + tag[1]).innerHTML = "";
+    if (tag == "opsi") {
+      opsi[k] = 0;
+      document.getElementById("opsi-" + k).innerHTML = "";
       for (var i in form[k]["data"]) {
-        addopsi(tag[1]);
+        addopsi(k);
         document
-          .getElementById("pin-" + tag[1] + "-" + (parseInt(i) + 1))
+          .getElementById("pin-" + k + "-" + (parseInt(i) + 1))
           .setAttribute("value", form[k]["data"][i]);
       }
-    } else if (tag[0] == "check") {
-      check[tag[1]] = 0;
-      document.getElementById("check-" + tag[1]).innerHTML = "";
+    } else if (tag == "check") {
+      check[k] = 0;
+      document.getElementById("check-" + k).innerHTML = "";
       for (var i in form[k]["data"]) {
-        addcheck(tag[1]);
+        addcheck(k);
         document
-          .getElementById("pin-" + tag[1] + "-" + (parseInt(i) + 1))
+          .getElementById("pin-" + k + "-" + (parseInt(i) + 1))
           .setAttribute("value", form[k]["data"][i]);
       }
-    } else if (tag[0] == "select") {
-      select[tag[1]] = 0;
-      document.getElementById("select-" + tag[1]).innerHTML = "";
+    } else if (tag == "select") {
+      select[k] = 0;
+      document.getElementById("select-" + k).innerHTML = "";
       for (var i in form[k]["data"]) {
-        addselect(tag[1]);
+        addselect(k);
         document
-          .getElementById("pin-" + tag[1] + "-" + (parseInt(i) + 1))
+          .getElementById("pin-" + k + "-" + (parseInt(i) + 1))
           .setAttribute("value", form[k]["data"][i]);
       }
-    } else if (tag[0] == "waktu") {
+    } else if (tag == "waktu") {
       if (form[k]["data"][0].length == 8) {
         document
-          .getElementById("chwaktu-" + tag[1])
+          .getElementById("chwaktu-" + k)
           .setAttribute("checked", "checked");
         document
-          .getElementById("inwaktu-" + tag[1])
+          .getElementById("inwaktu-" + k)
           .setAttribute("value", form[k]["data"][0]);
       }
     }
