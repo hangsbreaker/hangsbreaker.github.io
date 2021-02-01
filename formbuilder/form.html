@@ -26,10 +26,22 @@
   </div>
 
   <script>
-    const data = '{"judul":"Judul Formulir","deskripsi":"Deskripsi Formulir","form":[{"type":"text","pertanyaan":"Nama Lengkap","deskripsi":"Masukkan Nama Lengkap Anda","wajib":true,"data":[]},{"type":"select","pertanyaan":"Jenis Kelamin","deskripsi":"","wajib":true,"data":["Laki - laki","Perempuan"]},{"type":"tanggal","pertanyaan":"Tanggal Lahir","deskripsi":"","wajib":true,"data":["DD-MM-YYYY"]},{"type":"waktu","pertanyaan":"Jam Lahir","deskripsi":"","wajib":false,"data":["HH:mm"]},{"type":"textarea","pertanyaan":"Alamat","deskripsi":"","wajib":false,"data":[]},{"type":"waktu","pertanyaan":"Jam Tidur","deskripsi":"","wajib":false,"data":["HH:mm:ss"]},{"type":"check","pertanyaan":"Makanan Kesukaan","deskripsi":"","wajib":true,"data":["Nasi Goreng","Mie Goreng","Ayam Goreng"]},{"type":"opsi","pertanyaan":"Kamu Memilih Siapa","deskripsi":"","wajib":false,"data":["Aku","Dia"]}]}';
+
+    const data = {
+      "title": "Judul Formulir", "description": "Description Formulir", "form": [
+        { "type": "text", "question": "Nama Lengkap", "description": "Masukkan Nama Lengkap Anda", "required": true, "data": [] },
+        { "type": "select", "question": "Jenis Kelamin", "description": "", "required": true, "data": ["Laki - laki", "Perempuan"] },
+        { "type": "date", "question": "Tanggal Lahir", "description": "", "required": true, "data": ["DD-MM-YYYY"] },
+        { "type": "time", "question": "Jam Lahir", "description": "", "required": false, "data": ["HH:mm"] },
+        { "type": "textarea", "question": "Alamat", "description": "", "required": false, "data": [] },
+        { "type": "time", "question": "Jam Tidur", "description": "", "required": false, "data": ["HH:mm:ss"] },
+        { "type": "check", "question": "Makanan Kesukaan", "description": "", "required": true, "data": ["Nasi Goreng", "Mie Goreng", "Ayam Goreng"] },
+        { "type": "opsi", "question": "Kamu Memilih Siapa", "description": "", "required": false, "data": ["Aku", "Dia"] }
+      ]
+    };
 
     $(document).ready(function () {
-      buildform("formbuilder", data);
+      buildform("formbuilder", data, "id");
     });
   </script>
   <script src="lib/js/formbuilder.js"></script>

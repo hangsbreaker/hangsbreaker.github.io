@@ -1,15 +1,35 @@
-function buildform(myform = "", data = "") {
-  const json = JSON.parse(data);
+let lang = {
+  id: [
+    "Wajib",
+    "Jawaban Anda",
+    "Pilih Jawaban",
+    "Kosong",
+    "Batalkan pilihan",
+    "Kirim"
+  ],
+  en: [
+    "Required",
+    "Your Answer",
+    "Choose an answer",
+    "Blank",
+    "Cancel selection",
+    "Send"
+  ]
+};
+function buildform(myform = "", data = "", lg = "en") {
+  const json = typeof data == "string" ? JSON.parse(data) : data;
   let form = json["form"];
   var formats = {},
     sldt = {},
     tagform = document.getElementById(myform);
   tagform.innerHTML +=
-    '<div class="formhead"><h2 id="judulform">' +
-    json["judul"] +
-    '</h2><div id="deskripsiform">' +
-    json["deskripsi"] +
-    '</div><br><span class="wajib">* Wajib</span></div>';
+    '<div class="formhead"><h2 id="titleform">' +
+    json["title"] +
+    '</h2><div id="descriptionform">' +
+    json["description"] +
+    '</div><br><span class="required">* ' +
+    lang[lg][0] +
+    "</span></div>";
 
   let content = document.createElement("div");
   content.setAttribute("class", "formcontent");
@@ -18,30 +38,30 @@ function buildform(myform = "", data = "") {
     let tag = [];
     tag[1] = tagn;
     tag[0] = form[tagn]["type"];
-    let fname = form[tag[1]]["pertanyaan"].replace(/[^A-Za-z0-9!?]/g, ""); //.replace(/ /g, "_").replace(/\//g, "-");
+    let fname = form[tag[1]]["question"].replace(/[^A-Za-z0-9!?]/g, "");
 
     let wrap = document.createElement("div");
     let label;
-    if (tag[0] == "judul") {
+    if (tag[0] == "title") {
       label = document.createElement("h3");
-      wrap.setAttribute("class", "subjudul");
+      wrap.setAttribute("class", "subtitle");
     } else {
       label = document.createElement("label");
       wrap.setAttribute("class", "form-group");
       wrap.setAttribute("id", "fg-" + fname);
     }
-    label.setAttribute("class", "pertanyaan");
+    label.setAttribute("class", "question");
     label.setAttribute("id", "q-" + fname);
     label.innerHTML =
-      form[tag[1]]["pertanyaan"] +
-      (form[tag[1]]["wajib"] ? ' <span class="wajib">*</span>' : "");
+      form[tag[1]]["question"] +
+      (form[tag[1]]["required"] ? ' <span class="required">*</span>' : "");
     wrap.appendChild(label);
 
-    let deskripsi = document.createElement("p");
-    deskripsi.innerHTML = form[tag[1]]["deskripsi"];
-    deskripsi.setAttribute("class", "deskripsi");
-    deskripsi.setAttribute("id", "des-" + fname);
-    wrap.appendChild(deskripsi);
+    let description = document.createElement("p");
+    description.innerHTML = form[tag[1]]["description"];
+    description.setAttribute("class", "description");
+    description.setAttribute("id", "des-" + fname);
+    wrap.appendChild(description);
 
     if (form[tag[1]]["data"].length === 0 || tag[0] == "select") {
       let input;
@@ -50,14 +70,14 @@ function buildform(myform = "", data = "") {
         input.setAttribute("name", fname);
         input.setAttribute("id", fname);
         input.setAttribute("type", "text");
-        input.setAttribute("placeholder", "Jawaban Anda");
+        input.setAttribute("placeholder", lang[lg][1]);
         input.setAttribute("class", "form-control");
       } else if (tag[0] == "password") {
         input = document.createElement("input");
         input.setAttribute("name", fname);
         input.setAttribute("id", fname);
         input.setAttribute("type", "password");
-        input.setAttribute("placeholder", "Jawaban Anda");
+        input.setAttribute("placeholder", lang[lg][1]);
         input.setAttribute("class", "form-control");
       } else if (tag[0] == "file") {
         input = document.createElement("input");
@@ -69,14 +89,14 @@ function buildform(myform = "", data = "") {
         input = document.createElement("textarea");
         input.setAttribute("name", fname);
         input.setAttribute("id", fname);
-        input.setAttribute("placeholder", "Jawaban Anda");
+        input.setAttribute("placeholder", lang[lg][1]);
         input.setAttribute("class", "form-control");
       } else if (tag[0] == "select") {
         input = document.createElement("input");
         input.setAttribute("name", fname);
         input.setAttribute("id", fname);
         input.setAttribute("class", "form-select");
-        input.setAttribute("placeholder", "Pilih Jawaban");
+        input.setAttribute("placeholder", lang[lg][2]);
         sldt[tag[1]] = [];
         for (var i in form[tag[1]]["data"]) {
           sldt[tag[1]][i] = {
@@ -84,10 +104,10 @@ function buildform(myform = "", data = "") {
             text: form[tag[1]]["data"][i]
           };
         }
-        if (!form[tag[1]]["wajib"]) {
+        if (!form[tag[1]]["required"]) {
           sldt[tag[1]].push({
-            id: "Kosong",
-            text: "Kosong"
+            id: lang[lg][3],
+            text: lang[lg][3]
           });
         }
         $(function() {
@@ -96,7 +116,7 @@ function buildform(myform = "", data = "") {
           });
         });
       }
-      if (form[tag[1]]["wajib"]) {
+      if (form[tag[1]]["required"]) {
         input.setAttribute("required", "required");
       }
       wrap.appendChild(input);
@@ -107,7 +127,7 @@ function buildform(myform = "", data = "") {
         btlopt.setAttribute("id", "btlopsi-" + tag[1]);
         btlopt.setAttribute("class", "btn btlopt");
         btlopt.setAttribute("style", "display:none;");
-        btlopt.innerHTML = "Batalkan pilihan";
+        btlopt.innerHTML = lang[lg][4];
         btlopt.addEventListener("click", function() {
           this.style.display = "none";
           let ck = document.querySelectorAll('input[name="' + fname + '"]');
@@ -125,7 +145,7 @@ function buildform(myform = "", data = "") {
           input.setAttribute("type", "radio");
           input.setAttribute("value", form[tag[1]]["data"][i]);
           input.addEventListener("click", function() {
-            if (!form[tag[1]]["wajib"]) {
+            if (!form[tag[1]]["required"]) {
               document.getElementById("btlopsi-" + tag[1]).style.display =
                 "block";
             }
@@ -149,57 +169,57 @@ function buildform(myform = "", data = "") {
               ck[0].setAttribute("required", "required");
             }
           });
-        } else if (tag[0] == "tanggal") {
+        } else if (tag[0] == "date") {
           input = document.createElement("div");
-          input.setAttribute("class", "input-group tanggal");
-          input.setAttribute("id", "tanggal" + tag[1]);
+          input.setAttribute("class", "input-group date");
+          input.setAttribute("id", "date" + tag[1]);
           input.innerHTML =
-            '<input type="text" class="form-control intanggal" name="' +
+            '<input type="text" class="form-control indate" name="' +
             fname +
             '" id="' +
             fname +
             '" value="" placeholder="' +
             form[tag[1]]["data"][i] +
             '" ' +
-            (form[tag[1]]["wajib"] ? 'required="required"' : "") +
+            (form[tag[1]]["required"] ? 'required="required"' : "") +
             '/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>';
           formats[tag[1]] = form[tag[1]]["data"][i];
           $(function() {
-            $("#tanggal" + tag[1]).datetimepicker({
+            $("#date" + tag[1]).datetimepicker({
               viewMode: "years",
               format: formats[tag[1]]
             });
           });
-        } else if (tag[0] == "waktu") {
+        } else if (tag[0] == "time") {
           input = document.createElement("div");
-          input.setAttribute("class", "input-group jam");
-          input.setAttribute("id", "waktu" + tag[1]);
+          input.setAttribute("class", "input-group time");
+          input.setAttribute("id", "time" + tag[1]);
           input.innerHTML =
-            '<input type="text" class="form-control injam" name="' +
+            '<input type="text" class="form-control intime" name="' +
             fname +
             '" id="' +
             fname +
             '" value="" placeholder="' +
             form[tag[1]]["data"][i] +
             '" ' +
-            (form[tag[1]]["wajib"] ? 'required="required"' : "") +
+            (form[tag[1]]["required"] ? 'required="required"' : "") +
             '/><span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>';
           formats[tag[1]] = form[tag[1]]["data"][i];
           $(function() {
-            $("#waktu" + tag[1]).datetimepicker({
+            $("#time" + tag[1]).datetimepicker({
               format: formats[tag[1]]
             });
           });
-        } else if (tag[0] == "judul") {
+        } else if (tag[0] == "title") {
           input = document.createElement("span");
           input.innerHTML = form[tag[1]]["data"][i];
         }
-        if (form[tag[1]]["wajib"]) {
+        if (form[tag[1]]["required"]) {
           input.setAttribute("required", "required");
         }
 
         let labelp = document.createElement("label");
-        labelp.setAttribute("class", "pilihan");
+        labelp.setAttribute("class", "selection");
         labelp.appendChild(input);
         if (tag[0] === "opsi" || tag[0] === "check") {
           let span = document.createElement("span");
@@ -217,7 +237,7 @@ function buildform(myform = "", data = "") {
 
   let submit = document.createElement("input");
   submit.setAttribute("type", "submit");
-  submit.setAttribute("value", "Kirim");
+  submit.setAttribute("value", lang[lg][5]);
   submit.setAttribute("class", "btn btn-info send");
   tagform.appendChild(submit);
 }

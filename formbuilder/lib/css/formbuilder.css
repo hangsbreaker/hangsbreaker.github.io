@@ -22,16 +22,16 @@
     margin-bottom: 10px;
 }
 
-.jam {
+.time {
     width: 140px;
 }
 
-.pilihan {
+.selection {
     display: block;
     font-weight: normal;
 }
 
-.pilihan input {
+.selection input {
     margin-right: 5px;
 }
 
@@ -40,10 +40,10 @@
     padding-right: 20px;
 }
 
-.tanggal {
+.date {
     width: 160px;
 }
 
-.wajib {
+.required {
     color: #f14;
 }

@@ -57,18 +57,18 @@ function handleDragEnd(e) {
   });
 }
 
-function addform(pertanyaan = "", deskripsi = "", checked = "") {
+function addform(question = "", description = "", checked = "") {
   $("#formcont").append(
     '<div draggable="true" class="dragcontent box" id="dragaable-' +
       no +
-      '"><div class="rmr" onclick="this.parentNode.parentNode.removeChild(this.parentNode);" style="position: absolute;right: 0px;top: 0px;border-top-right-radius: 0px;">&times;</div><br/><input type="text" id="pertanyaan-' +
+      '"><div class="rmr" onclick="this.parentNode.parentNode.removeChild(this.parentNode);" style="position: absolute;right: 0px;top: 0px;border-top-right-radius: 0px;">&times;</div><br/><input type="text" id="question-' +
       no +
-      '" class="input pertanyaan" value="' +
-      pertanyaan +
-      '" placeholder="Pertanyaan" onkeyup="this.setAttribute(\'value\',this.value);"/><input type="text" placeholder="Deskripsi (opsional)" id="deskripsi-' +
+      '" class="input question" value="' +
+      question +
+      '" placeholder="Pertanyaan" onkeyup="this.setAttribute(\'value\',this.value);"/><input type="text" placeholder="Deskripsi (opsional)" id="description-' +
       no +
-      '" class="input deskripsi" value="' +
-      deskripsi +
+      '" class="input description" value="' +
+      description +
       '" onkeyup="this.setAttribute(\'value\',this.value);"/><div class="item" name="item-' +
       no +
       '" id="item-' +
@@ -79,9 +79,9 @@ function addform(pertanyaan = "", deskripsi = "", checked = "") {
       no +
       '" style="width:160px;" onchange="setjns(\'' +
       no +
-      '\')"><option value="input">Jawaban Singkat</option><option value="textarea">Paragraf</option><option value="radio">Pilihan Ganda</option><option value="checkbox">Kotak Centang</option><option value="select">Drop-down</option><option value="tanggal">Tanggal</option><option value="waktu">Waktu</option><option value="file">File</option><option value="password">Password</option><option disabled>────────────</option><option value="judul">Tambahkan Judul</option></select><div class="wajibisi" id="wajibisi-' +
+      '\')"><option value="input">Jawaban Singkat</option><option value="textarea">Paragraf</option><option value="radio">Pilihan Ganda</option><option value="checkbox">Kotak Centang</option><option value="select">Drop-down</option><option value="date">Tanggal</option><option value="time">Waktu</option><option value="file">File</option><option value="password">Password</option><option disabled>────────────</option><option value="title">Tambahkan Judul</option></select><div class="requiredisi" id="requiredisi-' +
       no +
-      '">Wajib diisi <label class="switch"><input type="checkbox" class="wajib" id="wajib-' +
+      '">Wajib diisi <label class="switch"><input type="checkbox" class="required" id="required-' +
       no +
       '" onchange=\'(this.checked?this.setAttribute("checked","checked"):this.removeAttribute("checked"));\' ' +
       checked +
@@ -120,13 +120,13 @@ function makeInput(no, inp) {
   select[no] = 0;
 
   document
-    .getElementById("pertanyaan-" + no)
+    .getElementById("question-" + no)
     .setAttribute("placeholder", "Pertanyaan");
   document
-    .getElementById("deskripsi-" + no)
+    .getElementById("description-" + no)
     .setAttribute("style", "display:block;");
   document
-    .getElementById("wajibisi-" + no)
+    .getElementById("requiredisi-" + no)
     .setAttribute("style", "display:block;");
   switch (inp) {
     case "input":
@@ -193,44 +193,44 @@ function makeInput(no, inp) {
         no +
         ')">Tambahkan opsi</a>';
       break;
-    case "tanggal":
+    case "date":
       tag =
-        '<div class="input-group tanggal" id="tanggal-' +
+        '<div class="input-group date" id="date-' +
         no +
-        '"><input type="text" class="form-control readopen" id="intanggal-' +
+        '"><input type="text" class="form-control readopen" id="indate-' +
         no +
         '" value="DD-MM-YYYY" readonly/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div>';
       break;
-    case "waktu":
+    case "time":
       tag =
-        '<div class="input-group jam" id="waktu-' +
+        '<div class="input-group jam" id="time-' +
         no +
-        '"><input type="text" class="form-control readopen" id="inwaktu-' +
+        '"><input type="text" class="form-control readopen" id="intime-' +
         no +
-        '" value="HH:mm" readonly/><span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span></div><label style="font-weight:normal;"><input type="checkbox" id="chwaktu-' +
+        '" value="HH:mm" readonly/><span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span></div><label style="font-weight:normal;"><input type="checkbox" id="chtime-' +
         no +
-        '" onchange=\'if(this.checked){this.setAttribute("checked","checked");document.getElementById("inwaktu-' +
+        '" onchange=\'if(this.checked){this.setAttribute("checked","checked");document.getElementById("intime-' +
         no +
-        '").setAttribute("value","HH:mm:ss");}else{this.removeAttribute("checked");document.getElementById("inwaktu-' +
+        '").setAttribute("value","HH:mm:ss");}else{this.removeAttribute("checked");document.getElementById("intime-' +
         no +
         '").setAttribute("value","HH:mm");}\'/> Tambahkan detik</label>';
       break;
-    case "judul":
+    case "title":
       document
-        .getElementById("pertanyaan-" + no)
+        .getElementById("question-" + no)
         .setAttribute("placeholder", "Judul");
       document
-        .getElementById("deskripsi-" + no)
+        .getElementById("description-" + no)
         .setAttribute("style", "display:none;");
       document
-        .getElementById("wajibisi-" + no)
+        .getElementById("requiredisi-" + no)
         .setAttribute("style", "display:none;");
       tag =
-        '<div class="input-group" style="width:100%;" id="judul-' +
+        '<div class="input-group" style="width:100%;" id="title-' +
         no +
-        '"><input type="text" value="" style="display:none;" id="injudul-' +
+        '"><input type="text" value="" style="display:none;" id="intitle-' +
         no +
-        '"/><div class="jawabanpanjang editableDiv" contentEditable="true" placeholder="Deskripsi (opsional)" onkeyup=\'document.getElementById("injudul-' +
+        '"/><div class="jawabanpanjang editableDiv" contentEditable="true" placeholder="Deskripsi (opsional)" onkeyup=\'document.getElementById("intitle-' +
         no +
         '").setAttribute("value",this.innerHTML);\'></div></div>';
       break;
@@ -308,23 +308,23 @@ document.addEventListener(
 
 function tojson() {
   json = {};
-  json["judul"] = document.getElementById("ftitle").value;
-  json["deskripsi"] = document.getElementById("fdeskripsi").innerHTML;
+  json["title"] = document.getElementById("ftitle").value;
+  json["description"] = document.getElementById("fdescription").innerHTML;
   json["form"] = [];
   let nj = 0;
-  let p = document.querySelectorAll(".pertanyaan");
+  let p = document.querySelectorAll(".question");
   p.forEach(function(i) {
     let n = i.id.split("-");
-    let pertanyaan = document.getElementById("pertanyaan-" + n[1]).value;
-    let deskripsi = document.getElementById("deskripsi-" + n[1]).value;
-    let wajib = document.getElementById("wajib-" + n[1]).checked;
+    let question = document.getElementById("question-" + n[1]).value;
+    let description = document.getElementById("description-" + n[1]).value;
+    let required = document.getElementById("required-" + n[1]).checked;
     let iditem = document.getElementById("item-" + n[1]).firstChild.id;
     let item = iditem.split("-");
     json["form"][nj] = {};
     json["form"][nj]["type"] = item[0];
-    json["form"][nj]["pertanyaan"] = pertanyaan;
-    json["form"][nj]["deskripsi"] = deskripsi;
-    json["form"][nj]["wajib"] = wajib;
+    json["form"][nj]["question"] = question;
+    json["form"][nj]["description"] = description;
+    json["form"][nj]["required"] = required;
     json["form"][nj]["data"] = [];
     let c = document.querySelectorAll("#" + iditem + " input[type=text]");
     c.forEach(function(j) {
@@ -358,14 +358,14 @@ function loadform() {
 function editing(data = "") {
   const djson = JSON.parse(data);
 
-  document.getElementById("ftitle").value = djson["judul"];
-  document.getElementById("fdeskripsi").innerHTML = djson["deskripsi"];
+  document.getElementById("ftitle").value = djson["title"];
+  document.getElementById("fdescription").innerHTML = djson["description"];
   let form = djson["form"];
   var formats = {};
 
   for (var k in form) {
     let tag = form[k]["type"];
-    let checkbx = form[k]["wajib"] ? "checked" : "";
+    let checkbx = form[k]["required"] ? "checked" : "";
     if (tag == "text") {
       jenis = 0;
     } else if (tag == "textarea") {
@@ -376,18 +376,18 @@ function editing(data = "") {
       jenis = 3;
     } else if (tag == "select") {
       jenis = 4;
-    } else if (tag == "tanggal") {
+    } else if (tag == "date") {
       jenis = 5;
-    } else if (tag == "waktu") {
+    } else if (tag == "time") {
       jenis = 6;
     } else if (tag == "file") {
       jenis = 7;
     } else if (tag == "password") {
       jenis = 8;
-    } else if (tag == "judul") {
+    } else if (tag == "title") {
       jenis = 10;
     }
-    addform(form[k]["pertanyaan"], form[k]["deskripsi"], checkbx);
+    addform(form[k]["question"], form[k]["description"], checkbx);
 
     if (tag == "opsi") {
       opsi[k] = 0;
@@ -416,13 +416,13 @@ function editing(data = "") {
           .getElementById("pin-" + k + "-" + (parseInt(i) + 1))
           .setAttribute("value", form[k]["data"][i]);
       }
-    } else if (tag == "waktu") {
+    } else if (tag == "time") {
       if (form[k]["data"][0].length == 8) {
         document
-          .getElementById("chwaktu-" + k)
+          .getElementById("chtime-" + k)
           .setAttribute("checked", "checked");
         document
-          .getElementById("inwaktu-" + k)
+          .getElementById("intime-" + k)
           .setAttribute("value", form[k]["data"][0]);
       }
     }
