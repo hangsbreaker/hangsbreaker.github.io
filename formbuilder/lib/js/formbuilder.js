@@ -17,6 +17,7 @@ let lang = {
   ]
 };
 function buildform(myform = "", data = "", lg = "en") {
+  lg = lg.toLowerCase();
   const json = typeof data == "string" ? JSON.parse(data) : data;
   let form = json["form"];
   var formats = {},
