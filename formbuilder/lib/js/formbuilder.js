@@ -242,6 +242,8 @@ function buildform(myform = "", data = "", lg = "en") {
 
   let submit = document.createElement("input");
   submit.setAttribute("type", "submit");
+  submit.setAttribute("name", "submit");
+  submit.setAttribute("id", "submit");
   submit.setAttribute("value", lang[lg][5]);
   submit.setAttribute("class", "btn btn-info send");
   tagform.appendChild(submit);
