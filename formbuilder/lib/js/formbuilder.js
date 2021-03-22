@@ -54,7 +54,11 @@ function buildform(myform = "", data = "", lg = "en") {
     label.setAttribute("class", "question");
     label.setAttribute("id", "q-" + fname);
     label.innerHTML =
+      '<span id="l-' +
+      fname +
+      '">' +
       form[tag[1]]["question"] +
+      "</span>" +
       (form[tag[1]]["required"] ? ' <span class="required">*</span>' : "");
     wrap.appendChild(label);
 
