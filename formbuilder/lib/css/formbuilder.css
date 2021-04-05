@@ -1,3 +1,7 @@
+.question, .description, #titleform, #descriptionform {
+    line-break: anywhere;
+}
+
 .btlopt {
     position: absolute;
     bottom: 10px;
