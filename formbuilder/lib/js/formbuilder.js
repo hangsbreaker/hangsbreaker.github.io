@@ -27,7 +27,7 @@ function buildform(myform = "", data = "", lg = "en") {
     '<div class="formhead"><h2 id="titleform">' +
     json["title"] +
     '</h2><div id="descriptionform">' +
-    json["description"] +
+    linkify(json["description"]) +
     '</div><br><span class="required">* ' +
     lang[lg][0] +
     "</span></div>";
@@ -63,7 +63,7 @@ function buildform(myform = "", data = "", lg = "en") {
     wrap.appendChild(label);
 
     let description = document.createElement("p");
-    description.innerHTML = form[tag[1]]["description"];
+    description.innerHTML = linkify(form[tag[1]]["description"]);
     description.setAttribute("class", "description");
     description.setAttribute("id", "des-" + fname);
     wrap.appendChild(description);
@@ -247,4 +247,25 @@ function buildform(myform = "", data = "", lg = "en") {
   submit.setAttribute("value", lang[lg][5]);
   submit.setAttribute("class", "btn btn-info send");
   tagform.appendChild(submit);
+}
+
+function linkify(inputText) {
+  var replacedText, replacePattern1, replacePattern2, replacePattern3;
+  replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+  replacedText = inputText.replace(
+    replacePattern1,
+    '<a href="$1" target="_blank">$1</a>'
+  );
+  replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+  replacedText = replacedText.replace(
+    replacePattern2,
+    '$1<a href="http://$2" target="_blank">$2</a>'
+  );
+  replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+  replacedText = replacedText.replace(
+    replacePattern3,
+    '<a href="mailto:$1">$1</a>'
+  );
+
+  return replacedText;
 }
