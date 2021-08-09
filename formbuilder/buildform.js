@@ -308,7 +308,7 @@ document.addEventListener(
 
 function tojson() {
   json = {};
-  json["title"] = document.getElementById("ftitle").value;
+  json["title"] = document.getElementById("ftitle").innerHTML;
   json["description"] = document.getElementById("fdescription").innerHTML;
   json["form"] = [];
   let nj = 0;
@@ -358,7 +358,7 @@ function loadform() {
 function editing(data = "") {
   const djson = JSON.parse(data);
 
-  document.getElementById("ftitle").value = djson["title"];
+  document.getElementById("ftitle").innerHTML = djson["title"];
   document.getElementById("fdescription").innerHTML = djson["description"];
   let form = djson["form"];
   var formats = {};
