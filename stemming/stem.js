@@ -275,7 +275,7 @@ function suffix(kata) {
               kata = kata.substr(0, kata.length - 3);
             }
           }
-        } else {
+        } else if (kata.length > 5) {
           kata = kata.substr(0, kata.length - 2);
         }
       }
