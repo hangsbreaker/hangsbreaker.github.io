@@ -1,18 +1,12 @@
 // STEMMING ========================
 function dasar(kata) {
-  if (
-    (kata.substr(-3) == "kah" && kata.length > 7) ||
-    (kata.length > 5 && kata.substr(-3) == "lah") ||
-    kata.substr(-3) == "pun"
-  ) {
-    kata = kata.substr(0, kata.length - 3);
-  }
-  //langkah 2 - hapus possesive pronoun
   if (kata.length > 4) {
     if (kata.substr(-2) == "ku" || kata.substr(-2) == "mu") {
       kata = kata.substr(0, kata.length - 2);
     } else {
-      if (kata.substr(-5) == "annya") {
+      if (kata.substr(-6) == "kannya") {
+        kata = kata.substr(0, kata.length - 3);
+      } else if (kata.substr(-5) == "annya" && kata.length > 8) {
         kata = kata.substr(0, kata.length - 5);
       } else {
         if (kata.substr(-3) == "nya") {
@@ -21,7 +15,7 @@ function dasar(kata) {
       }
     }
   }
-  //langkah 3 hapus first order prefiks (awalan pertama)
+
   if (kata.substr(0, 2) == "me") {
     if (kata.substr(0, 3) == "mem") {
       if (
@@ -63,7 +57,9 @@ function dasar(kata) {
               if (
                 (suffix(kata.substr(4, kata.length)).length > 5 &&
                   kata.substr(-1) != "t") ||
-                kata.substr(-1) == "p"
+                (kata.substr(-1) == "p" && kata.substr(5, 1) == "c") ||
+                kata.substr(5, 1) == "m" ||
+                kata.substr(-3) == "lah"
               ) {
                 kata = "k" + kata.substr(4, kata.length);
               } else {
@@ -134,10 +130,10 @@ function dasar(kata) {
                 kata = kata.substr(3, kata.length);
               } else {
                 if (kata.substr(0, 2) == "ke") {
-                  if (kata.substr(2, 1) == "m") {
-                    //$kata = substr($kata,3);
+                  if (kata.substr(2, 1) == "m" || kata.substr(2, 1) == "l") {
+                    kata = kata;
                   } else {
-                    if (kata.substr(2, 1) != "n") {
+                    if (kata.substr(2, 1) != "n" && kata.length > 5) {
                       kata = kata.substr(2, kata.length);
                     }
                   }
@@ -149,7 +145,7 @@ function dasar(kata) {
       }
     }
   }
-  //langkah 4 hapus second order prefiks (awalan kedua)
+
   if (kata.substr(0, 2) == "be") {
     if (kata.substr(2, 1) == "k") {
       kata = kata.substr(2, kata.length);
@@ -208,7 +204,6 @@ function dasar(kata) {
   }
 
   kata = suffix(kata);
-  ////langkah 5 hapus kalau cuma 1 karakter
   if (kata.length == 1) {
     kata = "";
   }
@@ -216,8 +211,6 @@ function dasar(kata) {
 }
 
 function suffix(kata) {
-  ////langkah 5 hapus suffiks
-
   var prefix = {
     kah: "",
     lah: "",
@@ -242,13 +235,21 @@ function suffix(kata) {
     ber: "",
     per: "",
     pel: "",
-    se: ""
+    se: "",
   };
   var str = kata;
   var RE = new RegExp(Object.keys(prefix).join("|"), "gi");
-  str = str.replace(RE, function(matched) {
+  str = str.replace(RE, function (matched) {
     return prefix[matched];
   });
+
+  if (
+    (kata.substr(-3) == "kah" && kata.length > 7) ||
+    (kata.length > 5 && kata.substr(-3) == "lah") ||
+    kata.substr(-3) == "pun"
+  ) {
+    kata = kata.substr(0, kata.length - 3);
+  }
 
   if (kata.substr(-1) == "i") {
     if (str.length > 5) {
@@ -292,9 +293,10 @@ function stem(kalimat = "") {
       .toLowerCase()
       .split(" ");
     for (kata in ark) {
+      str = str.trim();
       str = str + " " + dasar(ark[kata]);
     }
     return str.trim();
   }
-  return;
+  return "";
 }
