@@ -58,7 +58,7 @@ function dasar(kata) {
                 (suffix(kata.substr(4, kata.length)).length > 5 &&
                   kata.substr(-1) != "t") ||
                 (kata.substr(-1) == "p" && kata.substr(5, 1) == "c") ||
-                kata.substr(5, 1) == "m" ||
+                (kata.substr(4, 1) == "e" && (kata.substr(5, 1) == "m" || kata.substr(5, 1) == "j" || kata.substr(6, 1) == "j")) ||
                 kata.substr(-3) == "lah"
               ) {
                 kata = "k" + kata.substr(4, kata.length);
