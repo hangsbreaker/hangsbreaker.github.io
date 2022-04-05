@@ -1,5 +1,6 @@
 // STEMMING ========================
 function dasar(kata) {
+  const vocal = ["a", "i", "u", "e", "o"];
   if (kata.length > 4) {
     if (kata.substr(-2) == "ku" || kata.substr(-2) == "mu") {
       kata = kata.substr(0, kata.length - 2);
@@ -42,10 +43,16 @@ function dasar(kata) {
       }
     } else {
       if (kata.substr(0, 3) == "men") {
-        if (kata.substr(3, 1) == "e" || kata.substr(3, 1) == "a") {
-          kata = "t" + kata.substr(3, kata.length);
-        } else if (kata.substr(3, 1) == "i") {
-          kata = "n" + kata.substr(3, kata.length);
+        if (vocal.includes(kata.substr(3, 1))) {
+          if (
+            (kata.substr(3, 1) == "i" && kata.substr(6, 1) == "h") ||
+            kata.substr(4, 1) == "i" ||
+            vocal.includes(kata.substr(4, 1))
+          ) {
+            kata = "n" + kata.substr(3, kata.length);
+          } else {
+            kata = "t" + kata.substr(3, kata.length);
+          }
         } else {
           if (kata.substr(0, 4) == "meng") {
             if (
@@ -58,7 +65,10 @@ function dasar(kata) {
                 (suffix(kata.substr(4, kata.length)).length > 5 &&
                   kata.substr(-1) != "t") ||
                 (kata.substr(-1) == "p" && kata.substr(5, 1) == "c") ||
-                (kata.substr(4, 1) == "e" && (kata.substr(5, 1) == "m" || kata.substr(5, 1) == "j" || kata.substr(6, 1) == "j")) ||
+                (kata.substr(4, 1) == "e" &&
+                  (kata.substr(5, 1) == "m" ||
+                    kata.substr(5, 1) == "j" ||
+                    kata.substr(6, 1) == "j")) ||
                 kata.substr(-3) == "lah"
               ) {
                 kata = "k" + kata.substr(4, kata.length);
@@ -107,7 +117,9 @@ function dasar(kata) {
           kata = "m" + kata.substr(3, kata.length);
         }
       } else {
-        if (kata.substr(0, 3) == "pen") {
+        if (kata.substr(0, 4) == "peny") {
+          kata = "s" + kata.substr(4, kata.length);
+        } else if (kata.substr(0, 3) == "pen") {
           if (
             kata.substr(3, 1) == "a" ||
             kata.substr(3, 1) == "i" ||
@@ -120,22 +132,18 @@ function dasar(kata) {
             kata = kata.substr(3, kata.length);
           }
         } else {
-          if (kata.substr(0, 4) == "peny") {
-            kata = "s" + kata.substr(4, kata.length);
+          if (kata.substr(0, 2) == "di") {
+            kata = kata.substr(2, kata.length);
           } else {
-            if (kata.substr(0, 2) == "di") {
-              kata = kata.substr(2, kata.length);
+            if (kata.substr(0, 3) == "ter") {
+              kata = kata.substr(3, kata.length);
             } else {
-              if (kata.substr(0, 3) == "ter") {
-                kata = kata.substr(3, kata.length);
-              } else {
-                if (kata.substr(0, 2) == "ke") {
-                  if (kata.substr(2, 1) == "m" || kata.substr(2, 1) == "l") {
-                    kata = kata;
-                  } else {
-                    if (kata.substr(2, 1) != "n" && kata.length > 5) {
-                      kata = kata.substr(2, kata.length);
-                    }
+              if (kata.substr(0, 2) == "ke") {
+                if (kata.substr(2, 1) == "m" || kata.substr(2, 1) == "l") {
+                  kata = kata;
+                } else {
+                  if (kata.substr(2, 1) != "n" && kata.length > 5) {
+                    kata = kata.substr(2, kata.length);
                   }
                 }
               }
@@ -211,37 +219,9 @@ function dasar(kata) {
 }
 
 function suffix(kata) {
-  var prefix = {
-    kah: "",
-    lah: "",
-    pun: "",
-    me: "",
-    mem: "",
-    men: "",
-    meng: "",
-    meny: "",
-    peng: "",
-    pem: "",
-    pen: "",
-    peny: "",
-    di: "",
-    ter: "",
-    ke: "",
-    kem: "",
-    ken: "",
-    be: "",
-    bek: "",
-    bel: "",
-    ber: "",
-    per: "",
-    pel: "",
-    se: "",
-  };
-  var str = kata;
-  var RE = new RegExp(Object.keys(prefix).join("|"), "gi");
-  str = str.replace(RE, function (matched) {
-    return prefix[matched];
-  });
+  var prefix =
+    /kah|lah|pun|me|mem|men|meng|meny|peng|pem|pen|peny|di|ter|ke|kem|ken|be|bek|bel|ber|per|pel|se/g;
+  var str = kata.replace(prefix, "");
 
   if (
     (kata.substr(-3) == "kah" && kata.length > 7) ||
@@ -253,7 +233,12 @@ function suffix(kata) {
 
   if (kata.substr(-1) == "i") {
     if (str.length > 5) {
-      if (kata.substr(kata.length - 3, 2) != "rt") {
+      if (
+        kata.substr(kata.length - 3, 2) != "rt" &&
+        !kata.includes("l") &&
+        !kata.includes("m") &&
+        !kata.includes("n")
+      ) {
         kata = kata.substr(0, kata.length - 1);
       }
     }
@@ -276,7 +261,12 @@ function suffix(kata) {
               kata = kata.substr(0, kata.length - 3);
             }
           }
-        } else if (kata.length > 5) {
+        } else if (
+          (kata.length > 5 &&
+            kata.substr(-4) != "deng" &&
+            !kata.includes("u")) ||
+          kata.substr(-4) == "iman"
+        ) {
           kata = kata.substr(0, kata.length - 2);
         }
       }
