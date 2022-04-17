@@ -97,7 +97,7 @@ function buildform(myform = "", data = "", lg = "en") {
         input.setAttribute("placeholder", lang[lg][1]);
         input.setAttribute("class", "form-control");
       } else if (tag[0] == "select") {
-        input = document.createElement("input");
+        input = document.createElement("select");
         input.setAttribute("name", fname);
         input.setAttribute("id", fname);
         input.setAttribute("class", "form-select");
