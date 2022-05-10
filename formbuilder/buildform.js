@@ -95,16 +95,16 @@ function addform(question = "", description = "", checked = "") {
   item.addEventListener("dragleave", handleDragLeave, false);
   item.addEventListener("drop", handleDrop, false);
   item.addEventListener("dragend", handleDragEnd, false);
-  setjns(no, "1");
+  setjns(no, true);
   no++;
 }
 
-function setjns(no, n = "") {
+function setjns(no, n = false) {
   let se = document.getElementById("jnsper-" + no);
   for (var i = 0; i < se.options.length; i++) {
     se.options[i].removeAttribute("selected");
   }
-  if (n != "") {
+  if (n) {
     se.options[jenis].setAttribute("selected", "true");
   } else {
     se.options[se.selectedIndex].setAttribute("selected", "true");
