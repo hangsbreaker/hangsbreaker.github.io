@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="shortcut icon" type="image/png" href="dist/icon.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="dist/icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="dist/icon.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="dist/icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="dist/icon.png" />
+
+    <title>Membaca</title>
+    <link href="dist/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="dist/main/css/template.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet"
+        type="text/css">
+
+    <script src="dist/bootstrap/js/bootstrap.min.js"></script>
+    <script src="dist/main/js/jquery.1.12.4.min.js"></script>
+
+    <style>
+        body {
+            background-color: #dcf5ff;
+        }
+
+        #splash {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            background: #dcf5ff;
+            z-index: 3;
+            font-family: "Akaju", sans-serif;
+        }
+
+        .judul {
+            position: relative;
+            color: #000000;
+            text-align: center;
+            font-size: 35px;
+            font-weight: bold;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            user-select: none;
+            text-shadow: 3px 3px #a8d9e5;
+            font-family: "Akaju", sans-serif;
+        }
+
+        .wrapbox {
+            position: relative;
+            display: inline-table;
+            margin: 3px;
+            width: 80px;
+            height: 70px;
+            font-size: 35px;
+        }
+
+        .box {
+            position: absolute;
+            display: inline-block;
+            border-radius: 7px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            font-weight: bold;
+            color: #000000;
+            line-height: 1.9;
+            user-select: none;
+            cursor: pointer;
+            text-shadow: 2px 2px 7px #757575;
+            background-image: repeating-radial-gradient(circle at 0.4em 0.4em, var(--trans), var(--trans) 0.03em, var(--butter) 0.03em, var(--butter) 0.08em, var(--trans) 0.09em, var(--trans) 0.45em, var(--butter) 0.46em, var(--butter) 0.6em);
+            background-size: 0.8em 0.8em;
+            background-position: 0.6em 0.6em;
+        }
+
+        #menu {
+            margin-top: 40px;
+        }
+
+        .listmenu {
+            position: relative;
+            padding: 8px 20px;
+            background: #eee;
+            margin-bottom: 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            user-select: none;
+            z-index: 1;
+            color: #000000;
+            font-weight: bold;
+            font-size: 25px;
+            text-shadow: 2px 2px 2px #909090;
+            overflow: hidden;
+            font-family: "Akaju", sans-serif;
+        }
+
+        .listmenu::before,
+        .listmenu::after {
+            content: '';
+            font-size: 30px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            display: block;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+        }
+
+        #wrap {
+            display: none;
+        }
+
+        #content {
+            text-align: center;
+            margin: 10px auto;
+        }
+
+        #strcase {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            border-radius: 5px;
+            border: none;
+            padding: 2px 9px;
+            background: #0034bb;
+            color: #fff;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        #close {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            border-radius: 50%;
+            border: none;
+            padding: 2px 9px;
+            background: #f93e66;
+            color: #fff;
+            z-index: 1;
+        }
+
+        .alfabet {
+            background-image: repeating-linear-gradient(-25deg, var(--apricot), var(--apricot) 0.1em, var(--coral) 0.1em, var(--coral) 0.2em, var(--blush) 0.2em, var(--blush) 0.3em, var(--peach) 0.3em, var(--peach) 0.4em, var(--melon) 0.4em, var(--melon) 0.5em);
+        }
+
+        .alfabet:after {
+            background-image: repeating-radial-gradient(circle at 0.5em 0.5em, var(--trans), var(--trans) 0.2em, var(--ivory) 0.21em, var(--ivory) 0.5em, var(--trans) 0.51em, var(--trans) 1em), repeating-radial-gradient(circle at 0 0, var(--trans), var(--trans) 0.2em, var(--ivory) 0.21em, var(--ivory) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 1em 0, var(--trans), var(--trans) 0.2em, var(--ivory) 0.21em, var(--ivory) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 1em 1em, var(--trans), var(--trans) 0.2em, var(--ivory) 0.21em, var(--ivory) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 0 1em, var(--trans), var(--trans) 0.2em, var(--ivory) 0.21em, var(--ivory) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 0.5em 0.55em, var(--trans), var(--trans) 0.2em, var(--limestone) 0.21em, var(--limestone) 0.5em, var(--trans) 0.51em, var(--trans) 1em), repeating-radial-gradient(circle at 0 0.05em, var(--trans), var(--trans) 0.2em, var(--limestone) 0.21em, var(--limestone) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 1em 0.05em, var(--trans), var(--trans) 0.2em, var(--limestone) 0.21em, var(--limestone) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 1em 1.05em, var(--trans), var(--trans) 0.2em, var(--limestone) 0.21em, var(--limestone) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 0 1.05em, var(--trans), var(--trans) 0.2em, var(--limestone) 0.21em, var(--limestone) 0.5em, var(--trans) 0.51em, var(--trans) 2em);
+            background-size: 1em 1em;
+        }
+
+
+        .vokal {
+            background-color: #cddc39;
+        }
+
+        .vokal:after {
+            font-size: 28px;
+            background-image: repeating-radial-gradient(circle at 1.4em 0.49em, var(--spring), var(--spring) 0.54em, var(--trans) 0.555em, var(--trans) 2em), repeating-radial-gradient(circle at -0.4em 0.49em, var(--lime), var(--lime) 0.54em, var(--trans) 0.555em, var(--trans) 2em);
+            background-size: 1em 1.25em;
+            background-position: 12px 3.9em;
+        }
+
+        .konsonan {
+            background: var(--peach);
+            background-image: repeating-radial-gradient(circle at 0.2em 0.2em, var(--lemon), var(--lemon) 0.16em, var(--trans) 0.161em, var(--trans) 3em), repeating-radial-gradient(circle at 0.7em 0.7em, var(--yellow), var(--yellow) 0.16em, var(--trans) 0.161em, var(--trans) 3em);
+            background-size: 1em 1em;
+            background-position: 0.05em 0.05em;
+        }
+
+        .tebakhuruf {
+            background-color: var(--peach);
+            background-image: repeating-radial-gradient(circle at -0.35em -0.35em, var(--trans), var(--trans) 0.4em, var(--powder-blue) 0.41em, var(--powder-blue) 0.9em, var(--trans) 0.91em), repeating-radial-gradient(circle at 1.35em 1.35em, var(--trans), var(--trans) 0.4em, var(--powder-blue) 0.41em, var(--powder-blue) 0.9em, var(--trans) 0.91em);
+            background-size: 1em 1em;
+        }
+
+        #wrapspeak {
+            position: absolute;
+            display: none;
+            width: 100%;
+            bottom: 0px;
+            text-align: center;
+            background: #fbfbfb;
+            padding-bottom: 22px;
+            padding-top: 20px;
+            border-top-left-radius: 55%;
+            border-top-right-radius: 55%;
+            box-shadow: 0px 8px 10px 2px #717286;
+        }
+
+        .bigsize {
+            width: 180px;
+            height: 180px;
+            font-size: 90px;
+        }
+
+        .play-button {
+            position: absolute;
+            z-index: 10;
+            top: 50%;
+            left: 50%;
+            border: none;
+            transform: translateX(-50%) translateY(-50%);
+            box-sizing: content-box;
+            display: block;
+            width: 32px;
+            height: 44px;
+            /* background: #fa183d; */
+            border-radius: 50%;
+            padding: 18px 20px 18px 28px;
+        }
+
+        .play-button:before {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            display: block;
+            width: 80px;
+            height: 80px;
+            background: #ba1f24;
+            border-radius: 50%;
+            animation: pulse-border 1500ms ease-out infinite;
+        }
+
+        .play-button:after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            display: block;
+            width: 80px;
+            height: 80px;
+            background: #fa183d;
+            border-radius: 50%;
+            transition: all 200ms;
+        }
+
+        .play-button:hover:after {
+            background-color: darken(#fa183d, 10%);
+        }
+
+        .play-button span {
+            display: block;
+            position: relative;
+            z-index: 3;
+            width: 0;
+            height: 0;
+            border-left: 32px solid #fff;
+            border-top: 18px solid transparent;
+            border-bottom: 18px solid transparent;
+        }
+
+        @keyframes pulse-border {
+            0% {
+                transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .tobounce {
+            animation: bounce 1500ms ease-out infinite;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .hill {
+            position: fixed;
+            width: 100%;
+            bottom: 0px;
+            z-index: -3;
+        }
+
+        .hill::before {
+            content: '';
+            position: absolute;
+            width: 120%;
+            height: 140px;
+            background: #bbdf94;
+            left: -70px;
+            bottom: 0px;
+            border-top-right-radius: 70%;
+            z-index: -1;
+        }
+
+        .hill::after {
+            content: '';
+            position: absolute;
+            width: 110%;
+            height: 170px;
+            background: #ccdfb8;
+            right: -170px;
+            bottom: 0px;
+            border-top-left-radius: 70%;
+            z-index: -2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas class="confetti" id="canvas" style="position:fixed;"></canvas>
+    <div id="splash">
+        <div class="judul tobounce">Belajar Membaca</div>
+
+        <div class="background-cloud">
+            <div class="x1">
+                <div class="cloud"></div>
+            </div>
+
+            <div class="x2">
+                <div class="cloud"></div>
+            </div>
+
+            <div class="x3">
+                <div class="cloud"></div>
+            </div>
+
+            <div class="x4">
+                <div class="cloud"></div>
+            </div>
+
+            <div class="x5">
+                <div class="cloud"></div>
+            </div>
+        </div>
+
+        <button id="play" class="play-button">
+            <span></span>
+        </button>
+
+        <div id="position" class="sunflower">
+            <div class="head">
+                <div id="eye-1" class="eye"></div>
+                <div id="eye-2" class="eye"></div>
+                <div class="mouth"></div>
+            </div>
+            <div class="petals"></div>
+            <div class="trunk">
+                <div class="left-branch"></div>
+                <div class="right-branch"></div>
+            </div>
+            <div class="vase"></div>
+        </div>
+
+        <div class="hill"></div>
+
+        <div style="position:absolute;bottom:20px;width:100%;text-align:center;font-size:12px;z-index:2;">Orang tua
+            dimohon untuk tetap mendampingi</div>
+    </div>
+
+    <div class="hill"></div>
+
+    <div class="background-cloud">
+        <div class="x1">
+            <div class="cloud"></div>
+        </div>
+
+        <div class="x2">
+            <div class="cloud"></div>
+        </div>
+
+        <div class="x3">
+            <div class="cloud"></div>
+        </div>
+
+        <div class="x4">
+            <div class="cloud"></div>
+        </div>
+
+        <div class="x5">
+            <div class="cloud"></div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+
+                <div class="judul" id="judul">Belajar Membaca</div>
+                <div id="menu">
+                    <div class="listmenu alfabet">Alfabet</div>
+                    <div class="listmenu vokal">Vokal</div>
+                    <div class="listmenu konsonan">Konsonan</div>
+                    <div class="listmenu tebakhuruf">Tebak Huruf</div>
+                    <!--
+                    <div class="listmenu vokal">1 Suku Kata</div>
+                    <div class="listmenu vokal">1 Vokal dan 1 Suku Kata</div>
+                    <div class="listmenu vokal">1 Suku Kata dan 1 Vokal</div>
+                    <div class="listmenu vokal">1 Suku Kata dan Konsonan</div>
+                    <div class="listmenu vokal">2 Suku Kata</div>
+                    <div class="listmenu vokal">3 Suku Kata</div>
+                    <div class="listmenu vokal">Ng dan Ny</div>
+                    -->
+                </div>
+
+                <div id="wrap">
+                    <button type="button" id="strcase">Aa</button>
+                    <button type="button" id="close"><i class="fa-solid fa-xmark"></i></button>
+                    <div id="content"></div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    <div id="wrapreload" style="position:relative;width:100%;text-align:center;display:none;">
+        <button type="button" id="btnreload" class="btn btn-secondary" style="padding: 5px 30px;"><i
+                class="fa-solid fa-rotate-right"></i></button>
+    </div>
+
+    <div id="wrapspeak">
+        <div style="margin-bottom:12px;font-weight:bold;font-family:'Akaju',sans-serif;user-select:none;cursor:pointer;"
+            onclick="speak('Tekan tombol bicara kemudian katakan huruf dan namanya')">Tekan tombol bicara<br>Katakan
+            Huruf dan Namanya
+        </div>
+        <button onClick="GetSpeech()" class="btn btn-success" style="padding: 5px 30px;"><i
+                class="fa-solid fa-microphone"></i><span id="spiner"></span></button>
+    </div>
+
+    <div style="position:fixed;bottom:50px;z-index:-3;">
+        <div class="windmill">
+            <div class="stick"></div>
+            <div class="wind">
+                <div class="wind1"></div>
+                <div class="wind2"></div>
+                <div class="wind3"></div>
+                <div class="wind4"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <audio id="sparkle" src="audio/sparkle.wav"></audio>
+    <audio id="case" src="audio/case.wav"></audio>
+    <audio id="back" src="audio/back.wav"></audio>
+    <audio id="speech" src="audio/speech.wav"></audio>
+
+    <script src="dist/main/js/confetti.js"></script>
+    <script>
+        const acolors = ["#acdee7", "#acdee7", "#ffffb5", "#ffcdb6", "#f3b0c2",
+            "#c7dbda", "#ffe1e9", "#fdd7c2", "#f6eac2", "#ecd6e3",
+            "#ff9689", "#feaea5", "#ffc6bf", "#ffd8be", "#ffc7a2",
+            "#d4f0f1", "#8fc9ca", "#cce2cb", "#b7cfb7", "#97c1a9",
+            "#fcb9a9", "#ffdbcb", "#edeae5", "#a3e1dc", "#55cbcd",
+            "#cca3c1", "#e2c9dc", "#a6c6dd", "#cfded9", "#ffc696"];
+        const abjad = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+        const vokal = ["A", "I", "U", "E", "O"];
+        const konsonan = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
+
+        var tebak = [];
+        var nbox = 0;
+        function setContent(data = []) {
+            $("#content").html("");
+            for (d of data) {
+                $("#content").append(boxColor(d));
+                nbox++;
+            }
+            $(".wrapbox").click(function () {
+                let idx = $(this).index();
+                let txt = $("#box" + idx).html();
+                // console.log(txt)
+                if (synth.speaking) {
+                    synth.cancel();
+                }
+                doBounce($("#box" + idx), 2, 10, 300);
+                speak(txt);
+            });
+        }
+
+        function boxColor(str) {
+            let rand = Math.floor(Math.random() * 26);
+            return `<div class="wrapbox"><div class="box" id="box${nbox}" style="background-color:${acolors[rand]};">${str}</div></div>`;
+        }
+
+        var strcase = "UPPER";
+        var a_sparkle = document.getElementById("sparkle"); // audio
+        var a_case = document.getElementById("case"); // audio
+        var a_back = document.getElementById("back"); // audio
+        var a_speech = document.getElementById("speech"); // audio
+        $(document).ready(function () {
+            $("#play").click(function () {
+                $("#splash").slideToggle();
+                speak("belajar membaca");
+            });
+
+            $("#judul").click(function () {
+                speak(this.innerHTML);
+            });
+
+            $(".listmenu").click(function () {
+                a_sparkle.play();
+                $("#menu").slideToggle();
+                $("#wrap").slideToggle();
+                let txt = this.innerHTML;
+                makeContent(txt);
+            });
+
+            $("#strcase").click(function () {
+                a_case.pause();
+                a_case.currentTime = 0
+                a_case.play();
+                var box = document.getElementsByClassName('box');
+                for (b of box) {
+                    if (strcase == "UPPER") {
+                        b.innerHTML = b.innerHTML.toLowerCase();
+                    } else {
+                        b.innerHTML = b.innerHTML.toUpperCase();
+                    }
+                    let rand = Math.floor(Math.random() * 26);
+                    b.style = "background-color:" + acolors[rand] + ";"
+                }
+                if (strcase == "UPPER") {
+                    strcase = "LOWER";
+                } else {
+                    strcase = "UPPER";
+                }
+            });
+
+            $("#btnreload").click(function () {
+                nbox = 0;
+                makeContent("Tebak Huruf");
+            });
+
+            $("#close").click(function () {
+                a_back.play();
+                nbox = 0;
+                strcase = "UPPER";
+                $("#wrapspeak").css("display", "none");
+                $("#wrapreload").css("display", "none");
+                $("#judul").html("Belajar Membaca");
+                $("#menu").slideToggle();
+                $("#wrap").slideToggle();
+            });
+
+        });
+
+        function makeContent(txt = "") {
+            if (txt == "Alfabet") {
+                setContent(abjad);
+                $("#judul").html("Huruf " + txt);
+                speak(txt);
+            } else if (txt == "Vokal") {
+                setContent(vokal);
+                $("#judul").html("Huruf " + txt);
+                speak(txt);
+            } else if (txt == "Konsonan") {
+                setContent(konsonan);
+                $("#judul").html("Huruf " + txt);
+                speak(txt);
+            } else if (txt == "Tebak Huruf") {
+                let rand = Math.floor(Math.random() * 26);
+                let lo = Math.floor(Math.random() * 2);
+                if (lo == 0) {
+                    tebak = [abjad[rand].toLowerCase()];
+                    strcase = "LOWER";
+                } else {
+                    tebak = [abjad[rand].toUpperCase()];
+                    strcase = "UPPER";
+                }
+                setContent(tebak);
+                $("#judul").html(txt);
+                $("#wrapspeak").css("display", "block");
+                $("#wrapreload").css("display", "block");
+                $(".wrapbox").addClass("bigsize");
+                speak(txt);
+            }
+        }
+
+        var synth = window.speechSynthesis;
+        function speak(txt = "") {
+            var spcsu = new SpeechSynthesisUtterance();
+            const voices = synth.getVoices();
+            for (let i = 0; i < voices.length; i++) {
+                if (voices[i].lang === 'id-ID') {
+                    spcsu.voice = voices[i];
+                }
+            }
+            spcsu.lang = 'id-ID';
+            spcsu.text = txt;
+            spcsu.rate = 1;
+            spcsu.pitch = 1.3;
+            synth.speak(spcsu);
+        }
+
+        const GetSpeech = () => {
+            console.log("clicked microphone");
+            a_speech.play();
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            let recognition = new SpeechRecognition();
+
+            recognition.onstart = () => {
+                $("#spiner").html('&nbsp;&nbsp;<i class="fas fa-spinner fa-pulse"></i>');
+                console.log("starting listening, speak in microphone");
+            }
+            recognition.onspeechend = () => {
+                $("#spiner").html('');
+                console.log("stopped listening");
+                recognition.stop();
+            }
+            recognition.onresult = (result) => {
+                $("#spiner").html('');
+                console.log(result.results[0][0].transcript);
+                if (result.results[0][0].transcript != "") {
+                    let res = result.results[0][0].transcript.split(' ');
+                    if (res[res.length - 1].toLowerCase() == tebak[0].toLowerCase()) {
+                        speak("Yaay... kamu benar");
+                        initConfetti();
+                        setTimeout(() => {
+                            $("#btnreload").click();
+                        }, 3000);
+                    } else {
+                        speak("Maaf, bukan itu");
+                    }
+                }
+            }
+
+            recognition.start();
+        }
+
+        function doBounce(element, times, distance, speed) {
+            for (i = 0; i < times; i++) {
+                element.animate({ marginTop: '-=' + distance + 'px' }, speed)
+                    .animate({ marginTop: '+=' + distance + 'px' }, speed);
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>
