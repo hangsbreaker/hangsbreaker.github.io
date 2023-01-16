@@ -556,6 +556,7 @@
                 $("#judul").html("Belajar Membaca");
                 $("#menu").slideToggle();
                 $("#wrap").slideToggle();
+                clearTimeout(timereload);
             });
 
         });
@@ -608,6 +609,7 @@
             synth.speak(spcsu);
         }
 
+        let timereload;
         const GetSpeech = () => {
             console.log("clicked microphone");
             a_speech.play();
@@ -632,7 +634,7 @@
                     if (res[res.length - 1].toLowerCase() == tebak[0].toLowerCase()) {
                         speak("Yaay... kamu benar");
                         initConfetti();
-                        setTimeout(() => {
+                        timereload = setTimeout(() => {
                             $("#btnreload").click();
                         }, 3000);
                     } else {
