@@ -485,9 +485,6 @@
                 let idx = $(this).index();
                 let txt = $("#box" + idx).html();
                 // console.log(txt)
-                if (synth.speaking) {
-                    synth.cancel();
-                }
                 doBounce($("#box" + idx), 2, 10, 300);
                 speak(txt);
             });
@@ -595,6 +592,9 @@
 
         var synth = window.speechSynthesis;
         function speak(txt = "") {
+            if (synth.speaking) {
+                synth.cancel();
+            }
             var spcsu = new SpeechSynthesisUtterance();
             const voices = synth.getVoices();
             for (let i = 0; i < voices.length; i++) {
