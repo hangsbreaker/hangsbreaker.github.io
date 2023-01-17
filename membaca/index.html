@@ -616,6 +616,7 @@
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
             let recognition = new SpeechRecognition();
+            recognition.lang = 'id-ID';
 
             recognition.onstart = () => {
                 $("#spiner").html('&nbsp;&nbsp;<i class="fas fa-spinner fa-pulse"></i>');
