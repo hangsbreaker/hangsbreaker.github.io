@@ -13,7 +13,7 @@
 
     <title>Membaca</title>
     <link href="dist/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="dist/main/css/template.css" rel="stylesheet" type="text/css">
+    <link href="dist/main/css/main.css" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet"
         type="text/css">
 
@@ -469,7 +469,7 @@
             "#d4f0f1", "#8fc9ca", "#cce2cb", "#b7cfb7", "#97c1a9",
             "#fcb9a9", "#ffdbcb", "#edeae5", "#a3e1dc", "#55cbcd",
             "#cca3c1", "#e2c9dc", "#a6c6dd", "#cfded9", "#ffc696"];
-        const abjad = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+        const alfabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
         const vokal = ["A", "I", "U", "E", "O"];
         const konsonan = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
 
@@ -560,7 +560,7 @@
 
         function makeContent(txt = "") {
             if (txt == "Alfabet") {
-                setContent(abjad);
+                setContent(alfabet);
                 $("#judul").html("Huruf " + txt);
                 speak(txt);
             } else if (txt == "Vokal") {
@@ -575,10 +575,10 @@
                 let rand = Math.floor(Math.random() * 26);
                 let lo = Math.floor(Math.random() * 2);
                 if (lo == 0) {
-                    tebak = [abjad[rand].toLowerCase()];
+                    tebak = [alfabet[rand].toLowerCase()];
                     strcase = "LOWER";
                 } else {
-                    tebak = [abjad[rand].toUpperCase()];
+                    tebak = [alfabet[rand].toUpperCase()];
                     strcase = "UPPER";
                 }
                 setContent(tebak);
