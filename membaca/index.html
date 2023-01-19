@@ -521,7 +521,7 @@
         var a_speech = document.getElementById("speech"); // audio
         $(document).ready(function () {
             $("#forortu").click(function () {
-                speak(this.value);
+                speak(this.innerHTML);
             });
             $("#play").click(function () {
                 $("#splash").slideToggle();
