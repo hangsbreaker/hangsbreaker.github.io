@@ -72,6 +72,7 @@
             user-select: none;
             cursor: pointer;
             text-shadow: 2px 2px 7px #757575;
+            box-shadow: 0px 1.4px 0px 0px #b7b7b7;
             background-image: repeating-radial-gradient(circle at 0.4em 0.4em, var(--trans), var(--trans) 0.03em, var(--butter) 0.03em, var(--butter) 0.08em, var(--trans) 0.09em, var(--trans) 0.45em, var(--butter) 0.46em, var(--butter) 0.6em);
             background-size: 0.8em 0.8em;
             background-position: 0.6em 0.6em;
@@ -83,9 +84,8 @@
 
         .listmenu {
             position: relative;
-            padding: 8px 20px;
-            background: #eee;
-            margin-bottom: 10px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
             border-radius: 7px;
             cursor: pointer;
             user-select: none;
@@ -93,22 +93,20 @@
             color: #000000;
             font-weight: bold;
             font-size: 25px;
-            text-shadow: 2px 2px 2px #909090;
-            overflow: hidden;
+            text-shadow: 2px 1px 3px #838383;
             font-family: "Akaju", sans-serif;
+            box-shadow: 0px 1.4px 0px 0px #b7b7b7;
+            background: repeating-linear-gradient(-45deg, rgb(255 255 255 / 40%), rgb(255 255 255 / 40%) 5px, transparent 5px, transparent 25px);
         }
 
-        .listmenu::before,
-        .listmenu::after {
-            content: '';
-            font-size: 30px;
+        .listmenu span {
             position: absolute;
-            top: 0px;
-            left: 0px;
-            display: block;
-            height: 100%;
-            width: 100%;
-            z-index: -1;
+            right: 5px;
+            top: 20px;
+            font-weight: normal;
+            font-size: 40px;
+            text-shadow: none;
+            color: rgb(255 255 255 / 50%);
         }
 
         #wrap {
@@ -146,37 +144,25 @@
         }
 
         .alfabet {
-            background-image: repeating-linear-gradient(-25deg, var(--apricot), var(--apricot) 0.1em, var(--coral) 0.1em, var(--coral) 0.2em, var(--blush) 0.2em, var(--blush) 0.3em, var(--peach) 0.3em, var(--peach) 0.4em, var(--melon) 0.4em, var(--melon) 0.5em);
-        }
-
-        .alfabet:after {
-            background-image: repeating-radial-gradient(circle at 0.5em 0.5em, var(--trans), var(--trans) 0.2em, var(--ivory) 0.21em, var(--ivory) 0.5em, var(--trans) 0.51em, var(--trans) 1em), repeating-radial-gradient(circle at 0 0, var(--trans), var(--trans) 0.2em, var(--ivory) 0.21em, var(--ivory) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 1em 0, var(--trans), var(--trans) 0.2em, var(--ivory) 0.21em, var(--ivory) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 1em 1em, var(--trans), var(--trans) 0.2em, var(--ivory) 0.21em, var(--ivory) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 0 1em, var(--trans), var(--trans) 0.2em, var(--ivory) 0.21em, var(--ivory) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 0.5em 0.55em, var(--trans), var(--trans) 0.2em, var(--limestone) 0.21em, var(--limestone) 0.5em, var(--trans) 0.51em, var(--trans) 1em), repeating-radial-gradient(circle at 0 0.05em, var(--trans), var(--trans) 0.2em, var(--limestone) 0.21em, var(--limestone) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 1em 0.05em, var(--trans), var(--trans) 0.2em, var(--limestone) 0.21em, var(--limestone) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 1em 1.05em, var(--trans), var(--trans) 0.2em, var(--limestone) 0.21em, var(--limestone) 0.5em, var(--trans) 0.51em, var(--trans) 2em), repeating-radial-gradient(circle at 0 1.05em, var(--trans), var(--trans) 0.2em, var(--limestone) 0.21em, var(--limestone) 0.5em, var(--trans) 0.51em, var(--trans) 2em);
-            background-size: 1em 1em;
+            background-color: var(--yellow);
         }
 
 
         .vokal {
-            background-color: #cddc39;
+            background-color: var(--leafy);
         }
 
-        .vokal:after {
-            font-size: 28px;
-            background-image: repeating-radial-gradient(circle at 1.4em 0.49em, var(--spring), var(--spring) 0.54em, var(--trans) 0.555em, var(--trans) 2em), repeating-radial-gradient(circle at -0.4em 0.49em, var(--lime), var(--lime) 0.54em, var(--trans) 0.555em, var(--trans) 2em);
-            background-size: 1em 1.25em;
-            background-position: 12px 3.9em;
-        }
 
         .konsonan {
-            background: var(--peach);
-            background-image: repeating-radial-gradient(circle at 0.2em 0.2em, var(--lemon), var(--lemon) 0.16em, var(--trans) 0.161em, var(--trans) 3em), repeating-radial-gradient(circle at 0.7em 0.7em, var(--yellow), var(--yellow) 0.16em, var(--trans) 0.161em, var(--trans) 3em);
-            background-size: 1em 1em;
-            background-position: 0.05em 0.05em;
+            background-color: var(--peach);
+        }
+
+        .satusuku {
+            background-color: var(--purple-light);
         }
 
         .tebakhuruf {
-            background-color: var(--peach);
-            background-image: repeating-radial-gradient(circle at -0.35em -0.35em, var(--trans), var(--trans) 0.4em, var(--powder-blue) 0.41em, var(--powder-blue) 0.9em, var(--trans) 0.91em), repeating-radial-gradient(circle at 1.35em 1.35em, var(--trans), var(--trans) 0.4em, var(--powder-blue) 0.41em, var(--powder-blue) 0.9em, var(--trans) 0.91em);
-            background-size: 1em 1em;
+            background-color: var(--robins-egg);
         }
 
         #wrapspeak {
@@ -197,6 +183,8 @@
             width: 180px;
             height: 180px;
             font-size: 90px;
+            display: block;
+            margin: 30px auto;
         }
 
         .play-button {
@@ -405,12 +393,27 @@
 
                 <div class="judul" id="judul">Belajar Membaca</div>
                 <div id="menu">
-                    <div class="listmenu alfabet">Alfabet</div>
-                    <div class="listmenu vokal">Vokal</div>
-                    <div class="listmenu konsonan">Konsonan</div>
-                    <div class="listmenu tebakhuruf">Tebak Huruf</div>
+                    <div class="listmenu alfabet">
+                        <b>Alfabet</b>
+                        <span>abc</span>
+                    </div>
+                    <div class="listmenu vokal">
+                        <b>Vokal</b>
+                        <span>aiueo</span>
+                    </div>
+                    <div class="listmenu konsonan">
+                        <b>Konsonan</b>
+                        <span>bcdf</span>
+                    </div>
+                    <div class="listmenu satusuku">
+                        <b>1 Suku Kata</b>
+                        <span>ba,ca</span>
+                    </div>
+                    <div class="listmenu tebakhuruf">
+                        <b>Tebak Huruf</b>
+                        <span>???</span>
+                    </div>
                     <!--
-                    <div class="listmenu vokal">1 Suku Kata</div>
                     <div class="listmenu vokal">1 Vokal dan 1 Suku Kata</div>
                     <div class="listmenu vokal">1 Suku Kata dan 1 Vokal</div>
                     <div class="listmenu vokal">1 Suku Kata dan Konsonan</div>
@@ -429,6 +432,17 @@
             <div class="col-md-2"></div>
         </div>
     </div>
+
+    <div id="wrapsatusuku" style="position:absolute;bottom:30px;width:100%;text-align:center;display:none;">
+        <button type="button" id="btnsatusukuback" class="btn btn-success" style="float:left;">
+            <i class="fa-solid fa-angles-left"></i>
+        </button>
+        <button type="button" id="btnsatusuku" class="btn btn-success" style="padding: 5px 30px;">bcdf</button>
+        <button type="button" id="btnsatusukunext" class="btn btn-success" style="float:right;">
+            <i class="fa-solid fa-angles-right"></i>
+        </button>
+    </div>
+
     <div id="wrapreload" style="position:relative;width:100%;text-align:center;display:none;">
         <button type="button" id="btnreload" class="btn btn-secondary" style="padding: 5px 30px;"><i
                 class="fa-solid fa-rotate-right"></i></button>
@@ -476,17 +490,19 @@
         var tebak = [];
         var nbox = 0;
         function setContent(data = []) {
+            nbox = 0;
             $("#content").html("");
             for (d of data) {
                 $("#content").append(boxColor(d));
                 nbox++;
             }
             $(".wrapbox").click(function () {
+                stopspeakloop();
                 let idx = $(this).index();
                 let txt = $("#box" + idx).html();
                 // console.log(txt)
                 doBounce($("#box" + idx), 2, 10, 300);
-                speak(txt);
+                speak(txt.toLowerCase());
             });
         }
 
@@ -495,6 +511,7 @@
             return `<div class="wrapbox"><div class="box" id="box${nbox}" style="background-color:${acolors[rand]};">${str}</div></div>`;
         }
 
+        var knsni = 0;
         var strcase = "UPPER";
         var a_sparkle = document.getElementById("sparkle"); // audio
         var a_case = document.getElementById("case"); // audio
@@ -514,7 +531,7 @@
                 a_sparkle.play();
                 $("#menu").slideToggle();
                 $("#wrap").slideToggle();
-                let txt = this.innerHTML;
+                let txt = $(this).find('b').html();
                 makeContent(txt);
             });
 
@@ -540,9 +557,42 @@
             });
 
             $("#btnreload").click(function () {
-                nbox = 0;
-                makeContent("Tebak Huruf");
+                makeContent($("#judul").html());
             });
+
+            $("#btnsatusuku").click(function () {
+                stopspeakloop();
+                setContent(konsonan);
+                $("#wrapsatusuku").css("display", "none");
+                speak("Pilih Huruf");
+
+                $(".wrapbox").click(function () {
+                    let idx = $(this).index();
+                    let txt = $("#box" + idx).html();
+                    knsni = idx;
+                    speak("");
+                    setSatusuku(txt);
+                });
+            });
+
+            $("#btnsatusukuback").click(function () {
+                stopspeakloop();
+                knsni = knsni - 1;
+                if (knsni < 0) {
+                    knsni = konsonan.length - 1;
+                }
+                setSatusuku(konsonan[knsni]);
+            });
+
+            $("#btnsatusukunext").click(function () {
+                stopspeakloop();
+                knsni = knsni + 1;
+                if (knsni > konsonan.length - 1) {
+                    knsni = 0;
+                }
+                setSatusuku(konsonan[knsni]);
+            });
+
 
             $("#close").click(function () {
                 a_back.play();
@@ -550,10 +600,13 @@
                 strcase = "UPPER";
                 $("#wrapspeak").css("display", "none");
                 $("#wrapreload").css("display", "none");
+                $("#wrapsatusuku").css("display", "none");
                 $("#judul").html("Belajar Membaca");
+                $("#content").html("");
                 $("#menu").slideToggle();
                 $("#wrap").slideToggle();
                 clearTimeout(timereload);
+                stopspeakloop();
             });
 
         });
@@ -571,6 +624,12 @@
                 setContent(konsonan);
                 $("#judul").html("Huruf " + txt);
                 speak(txt);
+            } else if (txt == "1 Suku Kata") {
+                $("#judul").html(txt)
+                speak(txt);
+                setTimeout(() => {
+                    setSatusuku("B");
+                }, 1000);
             } else if (txt == "Tebak Huruf") {
                 let rand = Math.floor(Math.random() * 26);
                 let lo = Math.floor(Math.random() * 2);
@@ -588,6 +647,33 @@
                 $(".wrapbox").addClass("bigsize");
                 speak(txt);
             }
+        }
+
+        function setSatusuku(txt = "") {
+            skploop = true;
+            let satusuku = [txt, txt + 'A', txt + 'I', txt + 'U', txt + 'E', txt + 'O'];
+            setContent(satusuku);
+            $(".wrapbox").first().addClass("bigsize");
+            $("#wrapsatusuku").css("display", "block");
+            speakArr(satusuku);
+        }
+
+        var timespkarr, skploop = true;
+        function speakArr(arr = [], n = 0) {
+            timespkarr = setTimeout(() => {
+                speak(arr[n].toLowerCase());
+                doBounce($("#box" + n), 2, 10, 300);
+                if (n < (arr.length - 1) && skploop) {
+                    n = n + 1;
+                    speakArr(arr, n);
+                }
+            }, 1000);
+            // clearTimeout(timespkarr);
+        }
+
+        function stopspeakloop() {
+            clearTimeout(timespkarr);
+            skploop = false;
         }
 
         var synth = window.speechSynthesis;
