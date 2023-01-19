@@ -9,19 +9,80 @@
   --profile-bg-color: #d2274c;
   --profile-shadow-color: #b12543;
 
-  --apricot: #FF8652;
-  --blush: #D67B71;
-  --butter: #F2C94C;
-  --coral: #EB4444;
-  --ivory: #F2EFE3;
-  --lemon: #EAFC7E;
-  --lime: #73D645;
-  --limestone: #C9C5B5;
-  --melon: #F2994A;
-  --powder-blue: #B5D0E0;
-  --peach: #FFB190;
-  --spring: #5ACB65;
-  --yellow: #FFE03D;
+  --ambrosia: #fcdbba;
+  --apricot: #ff8652;
+  --aubergine: #6a2352;
+  --auburn: #a12f2f;
+  --asparagus: #a0c259;
+  --beetroot: #7f0421;
+  --blue-tack: #82bfe0;
+  --bloom: #363a57;
+  --blush: #d67b71;
+  --bronze: #c27940;
+  --bud: #94c15c;
+  --burnt-orange: #ff5f00;
+  --butter: #f2c94c;
+  --strawberry-yogurt: #e4bcad;
+  --carmine: #9a133e;
+  --chocolate: #8f5d38;
+  --chestnut: #81291f;
+  --clay: #7d6050;
+  --conker: #6f3131;
+  --coral: #eb4444;
+  --dusty-purple: #7d6391;
+  --dusty-pink: #e4adad;
+  --emerald: #55b95f;
+  --fern: #4f8d08;
+  --forest: #2e644a;
+  --fudge: #c28742;
+  --grassy: #a8d363;
+  --green: #62b90a;
+  --hazelnut: #d08e5a;
+  --ink: #292c31;
+  --ivory: #f2efe3;
+  --lapis: #2b4d8d;
+  --leafy: #cddc39;
+  --lemon: #eafc7e;
+  --lime: #73d645;
+  --limestone: #c9c5b5;
+  --magenta: #bc2767;
+  --meadow: #7a9a3e;
+  --melon: #f2994a;
+  --midnight: #1b3955;
+  --mink: #e8c9a1;
+  --mint: #c4ea70;
+  --moss: #7db21c;
+  --mushroom: #ede8d5;
+  --navy: #363a57;
+  --orange: #fd8a04;
+  --pale-lemon: #f4ffdc;
+  --peach: #ffb190;
+  --pond-bottom: #264a46;
+  --powder-blue: #b5d0e0;
+  --powder-pink: #fbd1d1;
+  --primrose: #e1f7b0;
+  --purple: #a95af3;
+  --purple-light: #bba0f1;
+  --purple-slate: #545375;
+  --rainforest: #25422e;
+  --raspberry-jam: #3c0d2b;
+  --robins-egg: #b8dee0;
+  --rouge: #cc3737;
+  --royal: #4169e1;
+  --ruby: #d1314b;
+  --sage: #87a376;
+  --sakura: #ffe4e4;
+  --sea-glass: #7fd1ae;
+  --sea-foam: #5d998b;
+  --sea-fog: #758c92;
+  --slate: #7184a5;
+  --spearmint: #94e0cf;
+  --spring: #5acb65;
+  --succulent: #83a944;
+  --twilight: #203763;
+  --vavavoom: #bf0d0d;
+  --white: #ffffff;
+  --yellow: #ffe03d;
 
   --trans: transparent;
 }
@@ -230,7 +291,8 @@ textarea:focus,
   border-bottom: 1px solid #eee;
 }
 
-.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+.select2-container--default
+  .select2-results__option--highlighted.select2-results__option--selectable {
   background-color: var(--select-bg-color);
 }
 
@@ -245,7 +307,7 @@ textarea:focus,
   color: #f14;
 }
 
-.table> :not(:first-child) {
+.table > :not(:first-child) {
   border-top: none;
 }
 
@@ -265,7 +327,7 @@ textarea:focus,
   color: var(--theme-color) !important;
 }
 
-.atable .paggingfield .pagination>.active>a {
+.atable .paggingfield .pagination > .active > a {
   color: #ffffff !important;
   background: var(--theme-color) !important;
   border-color: var(--theme-color) !important;
@@ -725,7 +787,11 @@ small,
 }
 
 .wind1:after {
-  background-image: radial-gradient(circle at 0px 0px, rgba(241, 196, 15, 0) 40px, #f1c40f 41px);
+  background-image: radial-gradient(
+    circle at 0px 0px,
+    rgba(241, 196, 15, 0) 40px,
+    #f1c40f 41px
+  );
 }
 
 .wind2 {
@@ -739,7 +805,11 @@ small,
 }
 
 .wind2:after {
-  background-image: radial-gradient(circle at 0px 0px, rgba(255, 4, 4, 0) 40px, #d33 41px);
+  background-image: radial-gradient(
+    circle at 0px 0px,
+    rgba(255, 4, 4, 0) 40px,
+    #d33 41px
+  );
 }
 
 .wind3 {
@@ -753,7 +823,11 @@ small,
 }
 
 .wind3:after {
-  background-image: radial-gradient(circle at 0px 0px, rgba(241, 196, 15, 0) 40px, #2ecc71 41px);
+  background-image: radial-gradient(
+    circle at 0px 0px,
+    rgba(241, 196, 15, 0) 40px,
+    #2ecc71 41px
+  );
 }
 
 .wind4 {
@@ -767,7 +841,11 @@ small,
 }
 
 .wind4:after {
-  background-image: radial-gradient(circle at 0px 0px, rgba(52, 152, 219, 0) 40px, #3498db 41px);
+  background-image: radial-gradient(
+    circle at 0px 0px,
+    rgba(52, 152, 219, 0) 40px,
+    #3498db 41px
+  );
 }
 
 @keyframes rotates {
@@ -875,11 +953,8 @@ small,
   width: 50px;
   position: absolute;
   animation: petals 2s infinite linear;
-  box-shadow: 15px 17px #ffe000,
-    -15px 17px #ffe000,
-    -22px -7px #ffe000,
-    0px -22px #ffe000,
-    22px -7px #ffe000;
+  box-shadow: 15px 17px #ffe000, -15px 17px #ffe000, -22px -7px #ffe000,
+    0px -22px #ffe000, 22px -7px #ffe000;
 }
 
 .trunk {
@@ -946,7 +1021,7 @@ small,
 
 .vase:before,
 .vase:after {
-  content: '';
+  content: "";
   position: absolute;
   background: #faa118;
 }
@@ -1011,7 +1086,8 @@ small,
 }
 
 @keyframes eye {
-  from {}
+  from {
+  }
 
   79% {
     height: 5px;
@@ -1157,7 +1233,13 @@ small,
 .cloud {
   background: #fff;
   background: -moz-linear-gradient(top, #fff 5%, #f1f1f1 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #fff), color-stop(100%, #f1f1f1));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(5%, #fff),
+    color-stop(100%, #f1f1f1)
+  );
   background: -webkit-linear-gradient(top, #fff 5%, #f1f1f1 100%);
   background: -o-linear-gradient(top, #fff 5%, #f1f1f1 100%);
   background: -ms-linear-gradient(top, #fff 5%, #f1f1f1 100%);
@@ -1180,9 +1262,9 @@ small,
 .cloud:after,
 .cloud:before {
   background: #fff;
-  content: '';
+  content: "";
   position: absolute;
-  z-indeX: -1;
+  z-index: -1;
 }
 
 .cloud:after {
