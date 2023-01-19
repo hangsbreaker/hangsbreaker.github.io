@@ -576,7 +576,7 @@
                     let txt = $("#box" + idx).html();
                     knsni = idx;
                     speak("");
-                    setSatusuku(txt);
+                    setSatusuku(txt.toUpperCase());
                 });
             });
 
@@ -630,7 +630,8 @@
                 $("#judul").html("Huruf " + txt);
                 speak(txt);
             } else if (txt == "1 Suku Kata") {
-                $("#judul").html(txt)
+                $("#judul").html(txt);
+                knsni = idx;
                 speak(txt);
                 setTimeout(() => {
                     setSatusuku("B");
