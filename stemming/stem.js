@@ -165,10 +165,12 @@ function dasar(kata) {
           if (
             kata.substr(3, 3) == "sih" ||
             kata.substr(3, 3) == "ani" ||
-            kata.substr(3, 4) == "ikan"
+            kata.substr(3, 4) == "ikan" ||
+            kata.substr(4, 3) == "lah" ||
+            kata.length <= 4
           ) {
           } else {
-            if (kata.substr(3, 1) == "i") {
+            if (kata.substr(3, 1) == "i" && kata.substr(4, 3) != "man") {
               kata = kata.substr(2, kata.length);
             } else {
               kata = kata.substr(3, kata.length);
@@ -265,7 +267,8 @@ function suffix(kata) {
           kata.length > 5 &&
           kata.substr(0, 4) != "deng" &&
           !kata.includes("u") &&
-          kata.substr(-4) != "iman"
+          kata.substr(-4) != "iman" &&
+          kata.substr(0, 4) != "jang"
         ) {
           kata = kata.substr(0, kata.length - 2);
         }
