@@ -120,7 +120,7 @@ function setTranslate() {
 
 async function getqlist() {
     _("#list").innerHTML = `<div style="width:100%;height:150px;"><div class="loader"></div></div>`;
-    let re = await get("./surah/surah_list.json");
+    let re = await get("https://raw.githubusercontent.com/hangsbreaker/quran-json/main/surah_list.json");
     re = JSON.parse(re);
     surah_list = re;
     // console.log(re);
