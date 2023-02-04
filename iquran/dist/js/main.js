@@ -159,7 +159,7 @@ async function carikata(qry = "") {
     if (qry != "") {
         _("#wload").innerHTML = `<div style="width:100%;height:150px;"><div class="loader"></div></div>`;
         for (let q = 1; q <= 114; q++) {
-            let re = await get("./surah/" + q + ".json");
+            let re = await get("https://raw.githubusercontent.com/hangsbreaker/quran-json/main/Surah/"+q+".json");
             let arr = JSON.parse(re);
 
             for (r in arr) {
@@ -215,7 +215,7 @@ async function getsurah(surat = 1, nayah = "") {
     _("#wrapmenu").style.display = "block";
     _("#tsurah").innerHTML = surah + ") " + srh["surat_name"];
 
-    let re = await get("./surah/" + surah + ".json");
+    let re = await get("https://raw.githubusercontent.com/hangsbreaker/quran-json/main/Surah/"+surah+".json");
     re = JSON.parse(re);
     surah_data = re;
     // console.log(re);
