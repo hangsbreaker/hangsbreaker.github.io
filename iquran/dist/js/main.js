@@ -388,7 +388,7 @@ function newBookmark() {
 }
 
 function addBookmark(book = "", mark = "") {
-    console.log(book, mark);
+    // console.log(book, mark);
     if (book != "" && mark != "") {
         let b = JSON.parse(localStorage.getItem(book));
         if (!b.includes(mark)) {
