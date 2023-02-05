@@ -286,7 +286,7 @@ function showfnote(i = 0) {
 }
 
 function nextsurah() {
-    surah = surah + 1;
+    surah = parseInt(surah) + parseInt(1);
     if (surah > 114) {
         surah = 1;
     }
@@ -294,7 +294,7 @@ function nextsurah() {
 }
 
 function prevsurah() {
-    surah = surah - 1;
+    surah = parseInt(surah) - parseInt(1);
     if (surah < 1) {
         surah = 114;
     }
