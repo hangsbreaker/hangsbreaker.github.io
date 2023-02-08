@@ -20,11 +20,11 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BNJMPE9399"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-BNJMPE9399');
+        gtag('config', 'G-BNJMPE9399');
     </script>
 </head>
 
@@ -32,18 +32,18 @@
 
     <div id="wrapmenu" style="display:none;">
         <div id="menu" class="fixedmenu">
-            <div onclick="nextsurah()" class="mnav" style="left:0px;">
+            <div onclick="nextsurah()" id="lnav" class="mnav" style="left:0px;">
                 <span class="arrow arrow-left"></span>
             </div>
-            <div onclick="prevsurah()" class="mnav" style="right:0px;">
+            <div onclick="prevsurah()" id="rnav" class="mnav" style="right:0px;">
                 <span class="arrow arrow-right"></span>
             </div>
             <div class="menutitle">
                 <div style="display:inline-block;">
-                    <span onclick="history.back()" class="icon-home"
+                    <span id="tohome" onclick="history.back()" class="icon-home"
                         style="position:relative;top:2px;margin-right:5px;cursor:pointer;"></span>
                     <span id="tsurah"></span>
-                    <span onclick="_('#modalgotosurah').modal('show')" class="icon-turn-down"
+                    <span id="toayah" onclick="_('#modalgotoayah').modal('show')" class="icon-turn-down"
                         style="position:relative;top:2px;margin-left:5px;cursor:pointer;"></span>
                 </div>
             </div>
@@ -135,7 +135,7 @@
     </div>
 
 
-    <div class="modal" id="modalgotosurah">
+    <div class="modal" id="modalgotoayah">
         <div class="modaloverlay"></div>
         <div class="modalwrap" style="width:170px;">
             <span class="modalclose">&times;</span>
