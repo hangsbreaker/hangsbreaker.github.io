@@ -495,6 +495,7 @@ function addfrmBookmark() {
   _("#ttladdbook").innerHTML = "Tambah Bookmark";
   _("#addfrmbook").style.display = "none";
   _("#bookmarkfolder").style.display = "none";
+  _("#terakhirbaca").style.display = "none";
   _("#bookmarkadd").style.display = "block";
 }
 
@@ -502,6 +503,7 @@ function bataladdBookmark() {
   _("#ttladdbook").innerHTML = "Bookmark";
   _("#addfrmbook").style.display = "inline-block";
   _("#bookmarkfolder").style.display = "block";
+  _("#terakhirbaca").style.display = "block";
   _("#bookmarkadd").style.display = "none";
   _("#grupbookmark").value = "";
 }
@@ -512,6 +514,7 @@ function addmdlBookmark(mark = "") {
   _("#bookmarkpage").modal("show");
   _("#addfrmbook").style.display = "inline-block";
   _("#bookmarkfolder").style.display = "block";
+  _("#terakhirbaca").style.display = "block";
   _("#bookmarkadd").style.display = "none";
   _("#nomark").value = mark;
   let book = JSON.parse(localStorage.getItem("bookmark"));
@@ -583,6 +586,7 @@ function dataBookmark() {
   _("#ttladdbook").innerHTML = "Bookmark";
   _("#addfrmbook").style.display = "inline-block";
   _("#bookmarkfolder").style.display = "block";
+  _("#terakhirbaca").style.display = "block";
   _("#bookmarkadd").style.display = "none";
   _("#bookmarkpage").modal("show");
 
