@@ -514,13 +514,15 @@ function addmdlBookmark(mark = "") {
   _("#bookmarkfolder").style.display = "block";
   _("#bookmarkadd").style.display = "none";
   _("#nomark").value = mark;
-  if (localStorage.getItem("bookmark") == null) {
-    localStorage.setItem("bookmark", "[]");
-  }
   let book = JSON.parse(localStorage.getItem("bookmark"));
+
+  _(
+    "#terakhirbaca"
+  ).innerHTML = `<div class="listbooktitle nmayah" style="text-align:center;cursor:pointer;" onclick="setterakhirbaca('${mark}')">Tandai Terakhir Baca</div>`;
+
   if (book.length == 0) {
-    _("#bookmarkfolder").innerHTML =
-      '<div style="text-align:center;color:var(--color-text);">Belum ada bookmark</div>';
+    _("#bookmarkfolder").innerHTML = "";
+    // '<div style="text-align:center;color:var(--color-text);">Belum ada bookmark</div>';
   } else {
     let listbook = "";
     for (b in book) {
@@ -531,6 +533,11 @@ function addmdlBookmark(mark = "") {
     }
     _("#bookmarkfolder").innerHTML = listbook;
   }
+}
+
+function setterakhirbaca(mark) {
+  localStorage.setItem("terakhirbaca", mark);
+  _("#bookmarkpage").modal("hide");
 }
 
 function newBookmark() {
@@ -573,14 +580,17 @@ function addBookmark(book = "", mark = "") {
 }
 
 function dataBookmark() {
-  if (localStorage.getItem("bookmark") == null) {
-    localStorage.setItem("bookmark", "[]");
-  }
   _("#ttladdbook").innerHTML = "Bookmark";
   _("#addfrmbook").style.display = "inline-block";
   _("#bookmarkfolder").style.display = "block";
   _("#bookmarkadd").style.display = "none";
   _("#bookmarkpage").modal("show");
+
+  let trbaca = localStorage.getItem("terakhirbaca");
+  _(
+    "#terakhirbaca"
+  ).innerHTML = `<div class="listbooktitle nmayah" style="text-align:center;cursor:pointer;" onclick="gotoBookmark('${trbaca}')">Terakhir Baca</div>`;
+
   let listbook = "";
   let book = JSON.parse(localStorage.getItem("bookmark"));
   for (g in book) {
@@ -746,6 +756,12 @@ if (localStorage.getItem("transliterasi") == null) {
 }
 if (localStorage.getItem("translate") == null) {
   localStorage.setItem("translate", "true");
+}
+if (localStorage.getItem("terakhirbaca") == null) {
+  localStorage.setItem("terakhirbaca", "1_1");
+}
+if (localStorage.getItem("bookmark") == null) {
+  localStorage.setItem("bookmark", "[]");
 }
 
 let theme = localStorage.getItem("theme");
