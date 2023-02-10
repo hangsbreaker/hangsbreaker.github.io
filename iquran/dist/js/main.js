@@ -294,7 +294,7 @@ async function getsurah(surat = 1, nayah = "") {
   for (i in re) {
     let mark = surah + "_" + re[i]["no_ayat"];
     ayah += `<tr id="n${re[i]["no_ayat"]}">
-            <td style="text-align:center;vertical-align:top;padding-top:15px;padding-left:15px;">
+            <td style="text-align:center;vertical-align:top;padding-top:15px;padding-left:15px;max-width:15px;">
                 <div class="star8" style="cursor:pointer;" data-label="${
                   re[i]["no_ayat"]
                 }" onclick="copylink(${surah},${re[i]["no_ayat"]})"></div>
@@ -388,18 +388,18 @@ async function getayah(surat = 1, nayah = 1) {
   surah_data = re;
   // console.log(re);
 
-  let ayah = `<tr id="n${re[nayah]["no_ayat"]}" style="background:#ffffff;">
-              <td style="text-align:center;vertical-align:top;padding-top:15px;padding-left:15px;">
-                  <div class="star8" data-label="${re[nayah]["no_ayat"]}"></div>
+  let ayah = `<tr id="n${re[nayah-1]["no_ayat"]}" style="background:#ffffff;">
+              <td style="text-align:center;vertical-align:top;padding-top:15px;padding-left:15px;max-width:15px;">
+                  <div class="star8" data-label="${re[nayah-1]["no_ayat"]}"></div>
               </td>
               <td class="ayah">
                   <div class="arabic" style="width:100%;text-align:right;font-size:23px;line-height:2.3;margin-bottom:10px;">
-                      ${re[nayah]["teks_ayat"]}
+                      ${re[nayah-1]["teks_ayat"]}
                   </div>
-                  <span class="artr"><i>${re[nayah]["bacaan"]}</i></span>
-                  <span class="arid">${re[nayah]["teks_terjemah"].replaceAll(
+                  <span class="artr"><i>${re[nayah-1]["bacaan"]}</i></span>
+                  <span class="arid">${re[nayah-1]["teks_terjemah"].replaceAll(
                     "<sup>",
-                    `<sup class="fnote" onclick="showfnote(${nayah})">`
+                    `<sup class="fnote" onclick="showfnote(${nayah-1})">`
                   )}</span>
               </td>
           </tr>`;
