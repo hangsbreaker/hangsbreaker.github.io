@@ -294,7 +294,7 @@ async function getsurah(surat = 1, nayah = "") {
   for (i in re) {
     let mark = surah + "_" + re[i]["no_ayat"];
     ayah += `<tr id="n${re[i]["no_ayat"]}">
-            <td style="text-align:center;vertical-align:top;padding-top:15px;padding-left:15px;width:46px;">
+            <td style="text-align:center;vertical-align:top;padding-top:15px;padding-left:15px;width:55px;">
                 <div class="star8" style="cursor:pointer;" data-label="${
                   re[i]["no_ayat"]
                 }" onclick="copylink(${surah},${re[i]["no_ayat"]})"></div>
@@ -388,8 +388,8 @@ async function getayah(surat = 1, nayah = 1) {
   surah_data = re;
   // console.log(re);
 
-  let ayah = `<tr id="n${re[nayah-1]["no_ayat"]}" style="background:#ffffff;">
-              <td style="text-align:center;vertical-align:top;padding-top:15px;padding-left:15px;width:46px;">
+  let ayah = `<tr id="n${re[nayah-1]["no_ayat"]}" style="background:var(--color-content);">
+              <td style="text-align:center;vertical-align:top;padding-top:15px;padding-left:15px;width:55px;">
                   <div class="star8" data-label="${re[nayah-1]["no_ayat"]}"></div>
               </td>
               <td class="ayah">
