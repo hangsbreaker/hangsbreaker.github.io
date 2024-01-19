@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  Prevent display sleep and enable wake lock<br>
+  <button type="button" id="turn">Turn on awake</button>
+
+  <script src="awake.js"></script>
+  <script>
+    let isAwake = false;
+    let btn = document.querySelector("#turn");
+    turn.addEventListener('click', function () {
+      if (!isAwake) {
+        isAwake = true;
+        awakeEnable();
+        btn.innerHTML = "Turn off awake";
+        document.body.style.backgroundColor = "#addddd";
+      } else {
+        isAwake = false;
+        awakeDisable();
+        btn.innerHTML = "Turn on awake";
+        document.body.style.backgroundColor = "#ffffff";
+      }
+    })
+  </script>
+</body>
+
+</html>
