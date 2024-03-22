@@ -783,9 +783,11 @@
       position: relative;
       margin-top: 300px;
       width: 100%;
+      padding: 15px;
       font-size: 50px;
       text-align: center;
       color: white;
+      box-sizing: border-box;
 
     }
 
@@ -875,7 +877,7 @@
       } else if ((load_position["sheep"] == "left" && load_position["wolf"] == "left" && boat_position == "right") || (load_position["sheep"] == "right" && load_position["wolf"] == "right" && boat_position == "left")) {
         // alert("Failed");
         _("#banner").style.display = "block";
-        _("#msg").innerHTML = "No Way<br>The Wolf eats the Sheep";
+        _("#msg").innerHTML = "No Way<br>The Wolf eats The Sheep";
       } else if ((load_position["sheep"] == "left" && load_position["vegetable"] == "left" && boat_position == "right") || (load_position["sheep"] == "right" && load_position["vegetable"] == "right" && boat_position == "left")) {
         // alert("Failed");
         _("#banner").style.display = "block";
