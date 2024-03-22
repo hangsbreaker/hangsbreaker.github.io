@@ -13,16 +13,6 @@
       --animation-speed: 20s;
     }
 
-    @media (max-width:700px) {
-      :root {
-        --size: 80vw;
-      }
-
-      .perspective {
-        height: 190vw !important;
-      }
-    }
-
     body {
       margin: 0;
       padding: 0;
@@ -792,7 +782,7 @@
       position: relative;
       margin-top: 300px;
       width: 100%;
-      font-size: 60px;
+      font-size: 50px;
       text-align: center;
       color: white;
 
@@ -810,6 +800,13 @@
       color: #FFC107;
       font-weight: bold;
       top: 45px;
+    }
+
+
+    @media (max-width:700px) {
+      :root {
+        --size: 80vw;
+      }
     }
   </style>
 
@@ -877,11 +874,11 @@
       } else if ((load_position["sheep"] == "left" && load_position["wolf"] == "left" && boat_position == "right") || (load_position["sheep"] == "right" && load_position["wolf"] == "right" && boat_position == "left")) {
         // alert("Failed");
         _("#banner").style.display = "block";
-        _("#msg").innerHTML = "No Way<br>The Wolf eat Sheep";
+        _("#msg").innerHTML = "No Way<br>The Wolf eats the Sheep";
       } else if ((load_position["sheep"] == "left" && load_position["vegetable"] == "left" && boat_position == "right") || (load_position["sheep"] == "right" && load_position["vegetable"] == "right" && boat_position == "left")) {
         // alert("Failed");
         _("#banner").style.display = "block";
-        _("#msg").innerHTML = "No Way<br>The Sheep eat Carrot";
+        _("#msg").innerHTML = "No Way<br>The Sheep eats Carrots";
       } else if (load_position["sheep"] == "right" && load_position["wolf"] == "right" && load_position["vegetable"] == "right" && boat_position == "right" && who_on_boat == "") {
         // alert("Success");
         _("#banner").style.display = "block";
