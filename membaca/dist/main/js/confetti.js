@@ -1,5 +1,5 @@
 //-----------Var Inits--------------
-canvas = document.getElementById("canvas");
+canvas = document.getElementById("confetti");
 ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -19,7 +19,8 @@ const colors = [
     { front: 'orange', back: 'darkorange' },
     { front: 'pink', back: 'darkpink' },
     { front: 'purple', back: 'darkpurple' },
-    { front: 'turquoise', back: 'darkturquoise' }];
+    { front: 'turquoise', back: 'darkturquoise' }
+];
 
 
 //-----------Functions--------------
