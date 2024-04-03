@@ -182,10 +182,10 @@
       let wanita_nilai = hitung_nilai(wanita_jawa);
 
       hasil.innerHTML = '<b>Hasil:</b><br>';
-      if (kunci.hasOwnProperty(pria_nilai + '-' + wanita_nilai)) {
-        hasil.innerHTML += kunci[pria_nilai + '-' + wanita_nilai];
-      } else if (kunci.hasOwnProperty(wanita_nilai + '-' + pria_nilai)) {
+      if (kunci.hasOwnProperty(wanita_nilai + '-' + pria_nilai)) {
         hasil.innerHTML += kunci[wanita_nilai + '-' + pria_nilai];
+      } else if (kunci.hasOwnProperty(pria_nilai + '-' + wanita_nilai)) {
+        hasil.innerHTML += kunci[pria_nilai + '-' + wanita_nilai];
       }
     }
   </script>
