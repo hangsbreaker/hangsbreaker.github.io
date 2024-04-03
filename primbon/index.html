@@ -1,1 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+  <title>Primbon Jodoh</title>
+  <style>
+    * {
+      padding: 0px;
+      margin: 0px;
+    }
+
+    body {
+      font-family: Arial;
+      font-size: 14px;
+    }
+
+    input[type="text"] {
+      padding: 6px 12px;
+      border-radius: 5px;
+      border: 1px solid #000000;
+    }
+
+    #wrap {
+      position: relative;
+      margin: 10px auto;
+      width: 300px;
+    }
+
+    .form {
+      text-align: center;
+    }
+
+    .form-wrap {
+      margin-top: 7px;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      padding: 6px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #85ccf8;
+      color: #000000;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <div class="form">
+      <h2>Menghitung Primbon Nama Pasangan-Jodoh</h2>
+      <div class="form-wrap">
+        Nama Laki-laki<br>
+        <input type="text" id="pria" value="" placeholder="Nama Lengkap" /><br>
+      </div>
+      <div class="form-wrap">
+        Nama Perempuan<br>
+        <input type="text" id="wanita" value="" placeholder="Nama Lengkap" /><br>
+      </div>
+      <button type="button" class="btn" onclick="hitung()">Hitung</button>
+    </div>
+    <br><br>
+    <div id="hasil"></div>
+  </div>
+  <script>
+    const patokan = {
+      "HA": 1, "NA": 2, "CA": 3, "RA": 4, "KA": 5,
+      "DA": 6, "TA": 7, "SA": 8, "WA": 9, "LA": 10,
+      "PA": 11, "DHA": 12, "JA": 13, "YA": 14, "NYA": 15,
+      "MA": 16, "GA": 17, "BA": 18, "THA": 19, "NGA": 20
+    };
+    const awalan = [
+      "H", "N", "C", "R", "K",
+      "D", "T", "S", "W", "L",
+      "P", "DH", "J", "Y", "NY",
+      "M", "G", "B", "TH", "NG"
+    ];
+    const vokal = ["A", "I", "Y", "U", "E", "O"];
+
+    const kunci = {
+      "1-1": "Awet rumah tangganya",
+      "1-2": "Baik kasihnya atau romantis",
+      "1-3": "Sering cekcok, tidak harmonis",
+      "1-4": "Tidak awet dan bercerai",
+      "1-5": "Lestari pasangannya",
+      "1-6": "Tidak lestari, akhirnya berpisah",
+      "1-7": "Cepat bercerai terus bermusuhan",
+      "1-8": "Sentausa, utama, baik budi, anaknya sehat",
+      "1-9": "Cocok, membawa keberuntungan, derajat dan pangkat",
+
+      "2-2": "Bahagia penuh cinta, mendapat Rahmat Allah",
+      "2-3": "Tidak prayoga, salah satu mati",
+      "2-4": "Baik selamanya tidak putus",
+      "2-5": "Tidak layak, berpisah",
+      "2-6": "Rukun jejodohannya, dalam waktu lama atau panjang",
+      "2-7": "Langgeng jejodohannya",
+      "2-8": "Sentausa rumah tangganya",
+      "2-9": "Awet dan mendapat kedudukan",
+
+      "3-3": "Sering menemui kesulitan, jarang berada di rumah",
+      "3-4": "Tidak baik, malah cenderung menjadi jelek",
+      "3-5": "Tidak awet, jadi putus",
+      "3-6": "Rukun sampai kaki-kaki dan Nini-nini, diterima Tuhan, jauh dari halangan dan bahaya",
+      "3-7": "Banyak menemui bilahi atau halangan",
+      "3-8": "Tidak baik, berakibat cerai, lebih baik dihindari",
+      "3-9": "Baik, diberkati Allah, tutug, rukun, tenteram",
+
+      "4-4": "Baik, yang laki-laki di kuasai oleh perempuan, sangat terpana kepada pasangannya dan selalu ingin berkasih-kasihan",
+      "4-5": "Tidak baik, berakibat perceraian",
+      "4-6": "Juga tidak baik, berakhir dengan perceraian",
+      "4-7": "Saling mengasihi, tetapi perlu waspada, ada yang memusuhi",
+      "4-8": "Berkasih-kasihan tanpa putus",
+      "4-9": "Tidak baik, banyak kejahatan",
+
+      "5-5": "Banyak menemui bilahi",
+      "5-6": "Juga tidak baik, mengalami perpisahan",
+      "5-7": "Yang perempuan menurut kepada yang laki-laki",
+      "5-8": "Tidak baik, besar kemungkinan untuk bercerai",
+      "5-9": "Selalu berkasih-kasihan, dapat nikmat lahir batin",
+
+      "6-6": "Baik selamanya, selalu tumbuh dan berkembang",
+      "6-7": "Lestari, saudara dan famili mengasihinya",
+      "6-8": "Baik, bahagia yang didapat",
+      "6-9": "Baik, tetapi yang perempuan sering jadi sasaran pergunjingan",
+
+      "7-7": "Tidak baik, tidak awet dengan kebesaran yang didapat, selalu menuruti kehendak perempuan",
+      "7-8": "Awet rumah tangganya, yang laki-laki diperintah menurut dengan yang perempuan",
+      "7-9": "Lama-kelamaan jadi bercerai",
+
+      "8-8": "Sangat baik,selamanya tanpa halangan",
+      "8-9": "Baik, awet, rukun tapi hati-hati jika memanjat",
+
+      "9-9": "Perempuan sungkem pada laki-laki, tetapi kadang bertengkar, dan bisa sampai pada perceraian.",
+    };
+
+    function convert_nama(nama = "") {
+      let nama_jawa = [];
+      for (let i = 0; i < nama.length; i++) {
+        let jawa = "";
+        // console.log(nama.charAt(i));
+        if ((nama.charAt(i) == "D" && nama.charAt(i + 1) == "O") || (nama.charAt(i) == "T" && nama.charAt(i + 1) == "O")) {
+          jawa = nama.charAt(i) + "HA";
+          nama_jawa.push(jawa);
+          i = i + 2;
+        } else if (awalan.includes(nama.charAt(i) + nama.charAt(i + 1)) && vokal.includes(nama.charAt(i + 2))) {
+          jawa = nama.charAt(i) + nama.charAt(i + 1) + "A";
+          nama_jawa.push(jawa);
+          i = i + 2;
+        } else if (awalan.includes(nama.charAt(i)) && vokal.includes(nama.charAt(i + 1))) {
+          jawa = nama.charAt(i) + "A";
+          nama_jawa.push(jawa);
+          i = i + 1;
+        }
+      }
+
+      return nama_jawa;
+    }
+
+    function hitung_nilai(jawa = []) {
+      let nilai = 0;
+      for (i of jawa) {
+        nilai = nilai + patokan[i];
+      }
+      // Sisa bagi 9
+      nilai = nilai % 9;
+      return nilai;
+    }
+
+    function hitung() {
+      // Nilai pria
+      let hasil = document.getElementById("hasil");
+      let pria = document.getElementById("pria").value.toUpperCase();
+      let pria_jawa = convert_nama(pria);
+      let pria_nilai = hitung_nilai(pria_jawa);
+
+      // Nilai wanita
+      let wanita = document.getElementById("wanita").value.toUpperCase();
+      let wanita_jawa = convert_nama(wanita);
+      let wanita_nilai = hitung_nilai(wanita_jawa);
+
+      hasil.innerHTML = '<b>Hasil:</b><br>';
+      if (kunci.hasOwnProperty(pria_nilai + '-' + wanita_nilai)) {
+        hasil.innerHTML += kunci[pria_nilai + '-' + wanita_nilai];
+      } else if (kunci.hasOwnProperty(wanita_nilai + '-' + pria_nilai)) {
+        hasil.innerHTML += kunci[wanita_nilai + '-' + pria_nilai];
+      }
+    }
+  </script>
+</body>
+
+</html>
