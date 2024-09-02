@@ -48,7 +48,7 @@ function buildform(myform = "", data = "", lg = "en") {
       wrap.setAttribute("class", "subtitle");
     } else {
       label = document.createElement("label");
-      wrap.setAttribute("class", "form-group");
+      wrap.setAttribute("class", "form-group mb-3");
       wrap.setAttribute("id", "fg-" + fname);
     }
     label.setAttribute("class", "question");
@@ -242,6 +242,7 @@ function buildform(myform = "", data = "", lg = "en") {
 
   let wrpsubmit = document.createElement("div");
   wrpsubmit.setAttribute("id", "wrpsubmit");
+  wrpsubmit.setAttribute("class", "form-group mb-3");
   tagform.appendChild(wrpsubmit);
 
   let submit = document.createElement("input");
