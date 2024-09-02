@@ -249,7 +249,7 @@ function buildform(myform = "", data = "", lg = "en") {
   submit.setAttribute("type", "submit");
   submit.setAttribute("name", "submit");
   submit.setAttribute("id", "submit");
-  submit.setAttribute("class", "btn btn-info send");
+  submit.setAttribute("class", "btn btn-primary send");
   submit.innerHTML = lang[lg][5];
   wrpsubmit.appendChild(submit);
 }
