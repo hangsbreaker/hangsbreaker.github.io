@@ -245,12 +245,12 @@ function buildform(myform = "", data = "", lg = "en") {
   wrpsubmit.setAttribute("class", "form-group mb-3");
   tagform.appendChild(wrpsubmit);
 
-  let submit = document.createElement("input");
+  let submit = document.createElement("button");
   submit.setAttribute("type", "submit");
   submit.setAttribute("name", "submit");
   submit.setAttribute("id", "submit");
-  submit.setAttribute("value", lang[lg][5]);
   submit.setAttribute("class", "btn btn-info send");
+  submit.innerHTML = lang[lg][5];
   wrpsubmit.appendChild(submit);
 }
 
