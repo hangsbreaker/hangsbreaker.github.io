@@ -81,6 +81,7 @@
     const vokal = ["A", "I", "U", "E", "O"];
 
     const kunci = {
+      "0": "Kehidupan rumah tangga kalian kemungkinan tak akan berjalan harmonis. Pasalnya, salah satu pasangan akan lebih mendominasi dan menganggap pasangannya bukan pasangan.",
       "1-1": "Awet rumah tangganya",
       "1-2": "Baik kasihnya atau romantis",
       "1-3": "Sering cekcok, tidak harmonis",
@@ -181,13 +182,13 @@
       let wanita_jawa = convert_nama(wanita);
       let wanita_nilai = hitung_nilai(wanita_jawa);
 
-      wanita_nilai=wanita_nilai==0?1:wanita_nilai;
-      pria_nilai=pria_nilai==0?1:pria_nilai;
       hasil.innerHTML = '<b>Hasil:</b><br>';
       if (kunci.hasOwnProperty(wanita_nilai + '-' + pria_nilai)) {
         hasil.innerHTML += kunci[wanita_nilai + '-' + pria_nilai];
       } else if (kunci.hasOwnProperty(pria_nilai + '-' + wanita_nilai)) {
         hasil.innerHTML += kunci[pria_nilai + '-' + wanita_nilai];
+      } else {
+        hasil.innerHTML += kunci["0"];
       }
     }
   </script>
