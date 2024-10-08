@@ -181,6 +181,8 @@
       let wanita_jawa = convert_nama(wanita);
       let wanita_nilai = hitung_nilai(wanita_jawa);
 
+      wanita_nilai=wanita_nilai==0?1:wanita_nilai;
+      pria_nilai=pria_nilai==0?1:pria_nilai;
       hasil.innerHTML = '<b>Hasil:</b><br>';
       if (kunci.hasOwnProperty(wanita_nilai + '-' + pria_nilai)) {
         hasil.innerHTML += kunci[wanita_nilai + '-' + pria_nilai];
