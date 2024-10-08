@@ -20,11 +20,11 @@ let lang = {
 var tagn = 0;
 var lg = "en";
 var formats = {}, sldt = {};
-function addform(form = []) {
+function addformbuilder(form = []) {
 	let tag = [];
 	tag[1] = tagn;
 	tag[0] = form["type"];
-	let fname = form["question"].replace(/[^A-Za-z0-9]/g, "");
+	let fname = form["question"].toString().replace(/[^A-Za-z0-9]/g, "");
 
 	let wrap = document.createElement("div");
 	let label;
@@ -43,7 +43,7 @@ function addform(form = []) {
 		fname +
 		'">' +
 		form["question"] +
-		"</span>" +
+		'</span>' +
 		(form["required"] ? ' <span class="required">*</span>' : "");
 	wrap.appendChild(label);
 
@@ -235,13 +235,13 @@ function buildform(myform = "", data = "", lg = "en") {
 		linkify(json["description"]) +
 		'</div><br><span class="required">* ' +
 		lang[lg][0] +
-		"</span></div>";
+		'</span></div>';
 
 	let content = document.createElement("div");
 	content.setAttribute("class", "formcontent");
 	content.setAttribute("id", "formcontent");
 	for (var k in form) {
-		formwrap = addform(form[k]);
+		formwrap = addformbuilder(form[k]);
 		content.appendChild(formwrap);
 	}
 
@@ -270,7 +270,7 @@ function formbuilder_add(form = {}) {
 	let content = document.getElementById("formcontent");
 	content.setAttribute("class", "formcontent");
 	content.setAttribute("id", "formcontent");
-	formwrap = addform(form);
+	formwrap = addformbuilder(form);
 	content.appendChild(formwrap);
 }
 
