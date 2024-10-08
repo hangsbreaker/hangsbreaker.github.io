@@ -223,8 +223,8 @@ function addformbuilder(form = []) {
 	return wrap;
 }
 
-function buildform(myform = "", data = "", lg = "en") {
-	lg = lg.toLowerCase();
+function buildform(myform = "", data = "", lng = "en") {
+	lg = lng.toLowerCase();
 	const json = typeof data == "string" ? JSON.parse(data) : data;
 	let form = json["form"];
 	var tagform = document.getElementById(myform);
