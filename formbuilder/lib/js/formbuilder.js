@@ -295,3 +295,8 @@ function linkify(inputText) {
 
 	return replacedText;
 }
+
+function base64decode(str) {
+  let decode = atob(str).replace(/[\x80-\uffff]/g, (m) => `%${m.charCodeAt(0).toString(16).padStart(2, '0')}`)
+  return decodeURIComponent(decode)
+}
