@@ -27,7 +27,7 @@
 
   <script>
     $(document).ready(function () {
-      const data = atob(window.location.hash.replace("#", ""));
+      const data = base64decode(window.location.hash.replace("#", ""));
       const frm = buildform("formbuilder", data);
     });
   </script>
