@@ -143,6 +143,52 @@
             return el;
         }
 
+        function minify(str = "") {
+            str = str.replaceAll('"', '');
+            str = str.replaceAll('v=0\\r\\n', '');
+            str = str.replaceAll('s=-\\r\\n', '');
+            str = str.replaceAll('t=0 0', '');
+            str = str.replaceAll('a=group:BUNDLE 0\\r\\n', '');
+            str = str.replaceAll('a=extmap-allow-mixed\\r\\n', '');
+            str = str.replaceAll('a=msid-semantic: WMS\\r\\n', '');
+            str = str.replaceAll('a=ice-options:trickle\\r\\n', '');
+            str = str.replaceAll('a=mid:0\\r\\n', '');
+            str = str.replaceAll('a=max-message-size:262144\\r\\n', '');
+            if (type == "A") {
+                str = str.replaceAll('a=setup:actpass\\r\\n', '');
+            } else if (type == "B") {
+                str = str.replaceAll('a=setup:active\\r\\n', '');
+            }
+            str = str.split('\\r\\n');
+            str = str.filter(n => n)
+            return str;
+        }
+
+        function buildcand(str = "") {
+            str = JSON.parse(str);
+            let arr = [
+                "v=0",
+                str[0],
+                "s=-",
+                "t=0 0",
+                "a=group:BUNDLE 0",
+                "a=extmap-allow-mixed",
+                "a=msid-semantic: WMS",
+                "a=ice-options:trickle",
+                "a=max-message-size:262144",
+                "a=mid:0"
+            ];
+            if (type == "A") {
+                arr.push("a=setup:active");
+            } else if (type == "B") {
+                arr.push("a=setup:actpass");
+            }
+
+            delete (str[0]);
+            arr = arr.concat(str).filter(n => n);
+            return arr.join('\r\n') + '\r\n';
+        }
+
         function createConnection() {
             type = "A";
             dc.onopen = e => {
@@ -157,10 +203,11 @@
 
             pc.onicecandidate = e => {
                 const desc = JSON.stringify(pc.localDescription.sdp);
+                let arr = JSON.stringify(minify(desc));
                 console.log("icecandidate: " + desc);
                 _("#stringid").style.display = 'block';
-                _("#myicecan").value = desc;
-                createQR(desc);
+                _("#myicecan").value = arr;
+                createQR(arr);
             };
             pc.createOffer().then(o => pc.setLocalDescription(o)).then(a => console.log("Set Successfully!"));
         }
@@ -171,19 +218,21 @@
             if (type == "A") {
                 // answer
                 rdecs.type = "answer";
-                rdecs.sdp = icecan.value.replaceAll('\\r', '\r').replaceAll('\\n', '\n').replaceAll('"', '');
+                rdecs.sdp = buildcand(icecan.value);//icecan.value.replaceAll('\\r', '\r').replaceAll('\\n', '\n').replaceAll('"', '');
+                console.log(rdecs.sdp);
                 pc.setRemoteDescription(rdecs);
             } else if (icecan.value != "") {
                 // offer
                 type = "B";
                 rdecs.type = "offer";
-                rdecs.sdp = icecan.value.replaceAll('\\r', '\r').replaceAll('\\n', '\n').replaceAll('"', '');
+                rdecs.sdp = buildcand(icecan.value);//icecan.value.replaceAll('\\r', '\r').replaceAll('\\n', '\n').replaceAll('"', '');
                 pc.onicecandidate = e => {
                     const desc = JSON.stringify(pc.localDescription.sdp);
+                    let arr = JSON.stringify(minify(desc));
                     console.log("icecandidate: " + desc);
                     _("#stringid").style.display = 'block';
-                    _("#myicecan").value = desc;
-                    createQR(desc);
+                    _("#myicecan").value = arr;
+                    createQR(arr);
                 };
                 pc.ondatachannel = e => {
                     pc.dc = e.channel;
