@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        body {
+            padding: 10px;
+        }
+
+        button {
+            padding: 3px 7px;
+        }
+
+        #qrcode canvas {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+        }
+
+        #message {
+            padding: 5px 7px;
+        }
+
+
+        #scanner-container {
+            display: none;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            background: #ffffff;
+        }
+
+        #video {
+            width: 100%;
+            height: 60%;
+            background-color: #000;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scanner-container">
+        <video id="video"></video>
+        <button id="closescan">Close</button>
+        <div id="result"></div>
+    </div>
+    <h1>WebRTC</h1>
+    <div id="wrapconnect">
+        <ol style="font-size:0.7rem;padding-left:10px;">
+            <li>Open 2 Tabs / Browser</li>
+            <li>[First Tab] Click Create Connection</li>
+            <li>Copy String ID From First Tab</li>
+            <li>[Second Tab] Paste String ID on Connection String text and click Connect To</li>
+            <li>Copy String ID from Second Tab</li>
+            <li>Back to First Tab then paste to Connection String text then click Connect To</li>
+        </ol><br>
+        <button type="button" onclick="createConnection()">Create Connection</button><br>
+        Connection String<br>
+        <textarea id="icecan" placeholder="Connection String"></textarea><br>
+        <button type="button" onclick="connect()">Connect to</button>
+        <button type="button" onclick="startScan()">Scan QR</button><br><br>
+        <div id="stringid" style="display:none;">
+            <div id="qrcode"></div>
+            String ID<br>
+            <textarea id="myicecan"></textarea><br>
+            <button type="button" onclick="copyID()">Copy ID</button><br>
+        </div>
+    </div>
+    <div id="wrapmessage" style="display:none;">
+        Message<br>
+        <input type="text" id="message" placeholder="Message" /><br>
+        <button type="button" onclick="sendMessage()">Send Message</button><br><br>
+        <div id="res"></div>
+    </div>
+
+    <script src="zxing.js"></script>
+    <script src="qrcode.min.js"></script>
+    <script>
+        function startScan() {
+            _("#scanner-container").style.display = 'block';
+            const codeReader = new ZXing.BrowserQRCodeReader();
+            const resultContainer = document.getElementById("result");
+
+            resultContainer.textContent = "Memulai scanner...";
+
+            codeReader.decodeFromVideoDevice(null, 'video', (result, err) => {
+                if (result) {
+                    resultContainer.innerHTML = `QR Code ditemukan: <a href="${result.text}" target="_blank">${result.text}</a>`;
+                    // Untuk menghentikan scanner:
+                    codeReader.reset();
+                    _("#scanner-container").style.display = 'none';
+                    _("#result").innerHTML = '';
+                    _("#icecan").value = result.text;
+                    connect();
+                }
+                if (err && !(err instanceof ZXing.NotFoundException)) {
+                    console.error(err);
+                    resultContainer.textContent = "Error: " + err.message;
+                }
+            })
+                .then(() => console.log("Scanner berjalan"))
+                .catch(err => {
+                    console.error(err);
+                    resultContainer.textContent = "Tidak dapat mengakses kamera: " + err.message;
+                });
+            _("#closescan").addEventListener("click", () => {
+                codeReader.reset();
+                _("#scanner-container").style.display = 'none';
+                _("#result").innerHTML = '';
+            });
+        }
+
+        const pc = new RTCPeerConnection();
+        const dc = pc.createDataChannel("channel");
+        let type = "";
+        const _ = (id) => {
+            let el = {};
+            if (id.substr(0, 1) == "#") {
+                el = document.getElementById(id.substr(1, id.length));
+            } else if (id.substr(0, 1) == ".") {
+                el = document.querySelectorAll(id);
+            } else if (id.substr(0, 1) == "@") {
+                el = document.getElementsByName(id.substr(1, id.length));
+            }
+            if (!el) { console.warn(`Element ${id} not found`); }
+            return el;
+        }
+
+        function createConnection() {
+            type = "A";
+            dc.onopen = e => {
+                console.log("Connection OPENED!!");
+                _("#wrapconnect").style.display = 'none';
+                _("#wrapmessage").style.display = 'block';
+            }
+            dc.onmessage = e => {
+                console.log("Receive: " + e.data);
+                _("#res").innerHTML += 'Receive: ' + e.data + '<br>';
+            }
+
+            pc.onicecandidate = e => {
+                const desc = JSON.stringify(pc.localDescription.sdp);
+                console.log("icecandidate: " + desc);
+                _("#stringid").style.display = 'block';
+                _("#myicecan").value = desc;
+                createQR(desc);
+            };
+            pc.createOffer().then(o => pc.setLocalDescription(o)).then(a => console.log("Set Successfully!"));
+        }
+
+        function connect() {
+            const rdecs = { "type": "", "sdp": "" };
+            const icecan = _("#icecan");
+            if (type == "A") {
+                // answer
+                rdecs.type = "answer";
+                rdecs.sdp = icecan.value.replaceAll('\\r', '\r').replaceAll('\\n', '\n').replaceAll('"', '');
+                pc.setRemoteDescription(rdecs);
+            } else if (icecan.value != "") {
+                // offer
+                type = "B";
+                rdecs.type = "offer";
+                rdecs.sdp = icecan.value.replaceAll('\\r', '\r').replaceAll('\\n', '\n').replaceAll('"', '');
+                pc.onicecandidate = e => {
+                    const desc = JSON.stringify(pc.localDescription.sdp);
+                    console.log("icecandidate: " + desc);
+                    _("#stringid").style.display = 'block';
+                    _("#myicecan").value = desc;
+                    createQR(desc);
+                };
+                pc.ondatachannel = e => {
+                    pc.dc = e.channel;
+                    pc.dc.onopen = e => {
+                        console.log("Connection OPENED!!");
+                        _("#wrapconnect").style.display = 'none';
+                        _("#wrapmessage").style.display = 'block';
+                    }
+                    pc.dc.onmessage = e => {
+                        console.log("Receive: " + e.data);
+                        _("#res").innerHTML += 'Receive: ' + e.data + '<br>';
+                    }
+                }
+                pc.setRemoteDescription(rdecs).then(a => console.log("Offer set!"))
+                pc.createAnswer().then(a => pc.setLocalDescription(a)).then(a => console.log("answer created"));
+            } else {
+                alert("Connection string not valid!");
+            }
+        }
+
+        function sendMessage() {
+            const msg = _("#message");
+            if (type == "A") {
+                dc.send(msg.value);
+            } else if (type == "B") {
+                pc.dc.send(msg.value);
+            }
+            _("#res").innerHTML += 'Me: ' + msg.value + '<br>';
+            msg.value = '';
+        }
+
+        function createQR(str = '') {
+            _("#qrcode").innerHTML = '';
+            var qrcode = new QRCode("qrcode", {
+                text: str,
+                width: 400, height: 400,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function isValidJSON(str) {
+            try {
+                JSON.parse(str);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function copyID() {
+            let text = _("#myicecan").value;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied');
+            }).catch(err => {
+                console.error('Failed to copy to clipboard: ', err);
+                alert('Failed to copy to clipboard');
+            });
+        }
+    </script>
+</body>
+
+</html>

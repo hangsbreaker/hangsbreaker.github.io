@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>WebRTC</h1>
+    <button type="button" onclick="peerA()">Create Connection</button><br>
+    <button type="button" onclick="answerPeerA()">Peer A</button>
+    <button type="button" onclick="peerB()">Peer B</button><br><br>
+    <textarea id="icecan"></textarea><br>
+    <div id="myicecan"></div><br>
+    <input type="text" id="message" /><br>
+    <button type="button" onclick="sendMessage()">Send Message</button><br><br>
+    <div id="res"></div>
+
+    <script>
+        const pc = new RTCPeerConnection();
+        const dc = pc.createDataChannel("channel");
+        let type = "";
+        function peerA() {
+            type = "A";
+            dc.onmessage = e => {
+                console.log("Receive: " + e.data);
+                document.getElementById("res").innerHTML += 'Receive: ' + e.data + '<br>';
+            }
+            dc.onopen = e => console.log("Connection OPENED!!");
+
+            pc.onicecandidate = e => {
+                const desc = JSON.stringify(pc.localDescription);
+                console.log("icecandidate: " + desc);
+                document.getElementById("myicecan").innerHTML = desc;
+            };
+            pc.createOffer().then(o => pc.setLocalDescription(o)).then(a => console.log("Set Successfully!"));
+        }
+
+        function answerPeerA() {
+            const answer = JSON.parse(document.getElementById("icecan").value);
+            pc.setRemoteDescription(answer);
+        }
+
+        function peerB() {
+            type = "B";
+            const offer = JSON.parse(document.getElementById("icecan").value);
+            pc.onicecandidate = e => {
+                const desc = JSON.stringify(pc.localDescription);
+                console.log("icecandidate: " + desc);
+                document.getElementById("myicecan").innerHTML = desc;
+            };
+            pc.ondatachannel = e => {
+                pc.dc = e.channel;
+                pc.dc.onopen = e => console.log("Connection OPENED!!");
+                pc.dc.onmessage = e => {
+                    console.log("Receive: " + e.data);
+                    document.getElementById("res").innerHTML += 'Receive: ' + e.data + '<br>';
+                }
+            }
+            pc.setRemoteDescription(offer).then(a => console.log("Offer set!"))
+            pc.createAnswer().then(a => pc.setLocalDescription(a)).then(a => console.log("answer created"));
+        }
+
+        function sendMessage() {
+            const msg = document.getElementById("message");
+            if (type == "A") {
+                dc.send(msg.value);
+            } else if (type == "B") {
+                pc.dc.send(msg.value);
+            }
+            document.getElementById("res").innerHTML += 'Me: ' + msg.value + '<br>';
+            msg.value = '';
+        }
+    </script>
+</body>
+
+</html>
